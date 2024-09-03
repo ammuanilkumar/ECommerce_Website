@@ -1,8 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { DarkMode } from "./ui/DarkMode";
+import { DarkMode } from "../ui/DarkMode";
+import { CircleUserRound } from "lucide-react";
+import { ShoppingCart } from "lucide-react";
 
-const Header = () => {
+export const UserHeader = () => {
   return (
     <header className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg h-16 flex items-center justify-between px-6 md:px-12">
       <div className="flex items-center space-x-4">
@@ -23,29 +25,17 @@ const Header = () => {
           About
         </Link>
         <Link
-          to="/product"
+          to="/user/product"
           className="hover:text-gray-200 transition-colors duration-300"
         >
           Product
         </Link>
       </nav>
-      <div className="flex items-center gap-8">
-        <DarkMode/>
-        <button className="bg-white text-blue-600 px-6 py-2 rounded-full font-semibold shadow-md hover:bg-gray-100 transition-colors duration-300">
-          Join
-        </button>
+      <div className="flex items center gap-8">
+        <DarkMode />
+        <CircleUserRound />
+        <ShoppingCart />
       </div>
     </header>
   );
 };
-
-export default Header;
-
-
-
-
-
-
-
-
-
