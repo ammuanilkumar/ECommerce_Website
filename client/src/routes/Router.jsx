@@ -39,15 +39,15 @@ export const router = createBrowserRouter([
     element: <UserLayout />,
     path: "user",
     children: [
-      // {
-      //   path: "",
-      //   element: <HomePage />,
-      //   // element: <h1>Homepage</h1>,
-      // },
+    
       {
         path: "product",
 
         element: <ProductPage />,
+      },
+      {
+        path: "offers",
+        element: <offers />,
       },
       {
         path: "product-detail",
