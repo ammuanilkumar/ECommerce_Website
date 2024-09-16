@@ -117,13 +117,13 @@ export const checkUser = async (req, res) => {
 
     if (!user) {
       return res
-        .status(400)
-        .json({ success: false, message: "user not authenticated" });
+        .status(401)
+        .json({ success: false, message: "User not authenticated" });
     }
 
-    res.json({ success: true, message: "user authenticated" });
+    res.json({ success: true, message: "User authenticated" });
   } catch (error) {
-    console.error(error);
+    console.error("Check user error:", error.message);
     res.status(500).json({ success: false, message: "Internal server error" });
   }
 };
