@@ -93,8 +93,9 @@ export const userLogin = async (req, res) => {
 export const userProfile = async (req, res) => {
   try {
     const { id } = req.params;
+    const user = req.User;
 
-    const userData = await User.findById(id);
+    const userData = await User.findOne({email: user.email}).select( "-password");
 
     if (!userData) {
       return res

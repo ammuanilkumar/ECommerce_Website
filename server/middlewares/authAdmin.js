@@ -8,7 +8,7 @@ export const authAdmin = (req, res, next) => {
     if (!token) {
       return res
         .status(400)
-        .json({ success: false, message: "user Unauthorized access" });
+        .json({ success: false, message: "admin Unauthorized access" });
     }
 
     //verify token
@@ -18,10 +18,10 @@ export const authAdmin = (req, res, next) => {
     if (!tokenVarified) {
       return res
         .status(400)
-        .json({ success: false, message: "user Unauthorized acess" });
+        .json({ success: false, message: "admin Unauthorized acess" });
     }
 
-    req.user = tokenVarified;
+    req.admin = tokenVarified;
 
     next();
   } catch (error) {
