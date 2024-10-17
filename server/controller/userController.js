@@ -90,25 +90,20 @@ export const userLogin = async (req, res) => {
   }
 };
 
-export const userProfile = async (req, res) => {
+export const userProfile = async (req, res, next) => {
   try {
-    const { id } = req.params;
-    const user = req.User;
+    const user = req.user;
+    // const id = req.id//
+    const useData = await User.findOne({ email: user.email }).select(
+      "-password"
+    );
+    // const useData = await User.findById(id).select("-password");
 
-    const userData = await User.findOne({email: user.email}).select( "-password");
-
-    if (!userData) {
-      return res
-        .status(404)
-        .json({ success: false, message: "User not found" });
-    }
-
-    res
-      .status(200)
-      .json({ success: true, message: "User data fetched", data: userData });
+    res.json({ success: true, message: "user data fetched", data: useData });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ success: false, message: "Internal server error" });
+    res
+      .status(error.status || 500)
+      .json({ message: error.message || "Internal server error" });
   }
 };
 
@@ -131,10 +126,16 @@ export const checkUser = async (req, res) => {
 
 export const userLogout = async (req, res) => {
   try {
-    console.log(token);
-    res.clearCookies("token");
-    res.json({ success: true, message: "user loged out" });
+    //console.log(token);
+    res.clearCookie("token",{
+        path: "/",
+        sameSite: "None",
+        secure: true,
+        httpOnly: true,
+    });
+    res.json({ success: true, message: "user logged out" });
   } catch (error) {
+    console.log("logout error:", error);
     res.status(500).json({ success: false, message: "Internal server error" });
   }
 };

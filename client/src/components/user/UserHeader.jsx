@@ -13,20 +13,20 @@ export const UserHeader = () => {
 
       <nav className="flex space-x-8 text-lg font-semibold">
         <Link
-          to="/home"
+          to={"/user/home"}
           className="hover:text-gray-200 transition-colors duration-300"
         >
           Home
         </Link>
         <Link
-          to="/about"
+          to={"/user/about"}
           className="hover:text-gray-200 transition-colors duration-300"
         >
           About
         </Link>
-        
+
         <Link
-          to="/product"
+          to="/user/product"
           className="hover:text-gray-200 transition-colors duration-300"
         >
           Product
@@ -38,13 +38,16 @@ export const UserHeader = () => {
         >
           OFFERS
         </Link>
-
-
       </nav>
       <div className="flex items center gap-8">
         <DarkMode />
-        <CircleUserRound />
-        <ShoppingCart />
+        <Link to={"/user/profile"}>
+          <CircleUserRound />
+        </Link>
+        <Link to={"/user/cart"}>
+       
+          <ShoppingCart />
+        </Link>
       </div>
     </header>
   );

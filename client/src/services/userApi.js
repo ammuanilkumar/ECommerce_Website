@@ -24,6 +24,7 @@ export const userLogout = async () => {
     const response = await axiosInstance({
       url: "/user/logout",
       method: "POST",
+      withCredentials: true,//Ensure the request includes cookies
     });
     return response?.data;
   } catch (error) {
@@ -42,21 +43,24 @@ export const userCheck = async () => {
     return response?.data;
   } catch (error) {
     console.log(error);
-  }}
-
-export const fetchUserProfile = async () => {
-  try {
-    const response = await axiosInstance({
-      url: "/user/profile/id",
-      method: "GET",
-      withCredentials: true,
-    });
-    setUser(response?.data?.data);
-  } catch (error) {
-    console.log(error);
-    toast.error("error fetching data  from server");
   }
 };
+
+// export const fetchUserProfile = async () => {
+//   try {
+//     const response = await axiosInstance({
+//       url: "/user/profile",
+//       method: "GET",
+//       withCredentials: true,
+//     });
+//     setUser(response?.data?.data);
+//   } catch (error) {
+//     console.log(error);
+//     toast.error("error fetching data  from server");
+//   }
+// };
+
+
 
 // export const userCheck = async () => {
 //     try {

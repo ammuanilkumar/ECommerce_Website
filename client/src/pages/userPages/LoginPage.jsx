@@ -16,7 +16,7 @@ export const LoginPage = () => {
   const handleLogin = async (data) => {
     try {
       const response = await userLogin(data);
-      console.log("response==", response);
+     
 
       if (response && response.success) {
         navigate("/user/home");
@@ -30,7 +30,7 @@ export const LoginPage = () => {
       toast.error("Login error");
     }
   };
-  console.log(register)
+
 
   return (
     <div className="hero bg-base-200 py-20">
