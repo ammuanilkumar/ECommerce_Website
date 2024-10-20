@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 import { User } from "../models/userModel.js";
 
 import { generateUserToken } from "../utils/generateToken.js";
+import { syncIndexes } from "mongoose";
 
 export const userCreate = async (req, res) => {
   try {
@@ -106,6 +107,20 @@ export const userProfile = async (req, res, next) => {
       .json({ message: error.message || "Internal server error" });
   }
 };
+
+// export const updateUserProfile= async(req, res,)=>{
+//   try{
+//     const user = req.user;
+//     const { name, phone, password } = req.body;
+//   }
+//   catch(error){
+//     console.error("update user profile error:", error.message);
+//     res.status(500).json({ success: false, message: "Internal server error" });
+//   }
+
+// }
+
+
 
 export const checkUser = async (req, res) => {
   try {

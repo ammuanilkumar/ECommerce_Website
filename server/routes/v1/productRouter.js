@@ -4,7 +4,7 @@ import {
   createProduct,
   updateProduct,
 } from "../../controller/productController.js";
-//import {getProductList,} from "../../controller/productController.js";
+//00000000000000000000000000000000000000000000000000000000000000000import {getProductList} from "../../controller/productController.js";
 
 import { authUser } from "../../middlewares/authUser.js";
 import { upload } from "../../middlewares/uploadMiddleware.js";

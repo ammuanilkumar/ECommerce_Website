@@ -112,19 +112,19 @@ export const UserProfile = () => {
         <h2 className="text-center text-1xl font-bold text-gray-900 mb-4 capitalize">Name:{user.name}
          </h2>
         <p><span className="font-medium text-gray-900">Email:</span> {user.email}</p>
-        <p><strong>Phone:</strong> (123) 456-7890</p>
-        <p><strong>Address:</strong> 1234 Elm Street, Springfield</p>
+        <p><strong>Phone:</strong> +91</p>
+        <p><strong>Address:</strong> 1234 Erkm Street</p>
       </div>
       <div className="bg-gray-50 p-6 rounded-lg shadow-inner">
         <h3 className="text-lg font-semibold mb-4">Shipping Information</h3>
         <p><strong>Shipping Address:</strong></p>
-        <p>4567 Oak Avenue, Springfield</p>
+        <p>4567 Avenue , Springfield</p>
         <p><strong>Delivery Preferences:</strong> Leave at the front door</p>
       </div>
       <div className="bg-gray-50 p-6 rounded-lg shadow-inner">
         <h3 className="text-lg font-semibold mb-4">Payment Methods</h3>
         <p><strong>Credit Card:</strong> **** **** **** 1234</p>
-        <p><strong>PayPal:</strong> jane.doe@paypal.com</p>
+        <p><strong>PayPal:</strong> jithu1234@paypal.com</p>
       </div>
     </div>
 
