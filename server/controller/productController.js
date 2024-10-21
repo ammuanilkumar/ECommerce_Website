@@ -15,6 +15,22 @@ export const getProductList = async (req, res) => {
   }
 };
 
+//Function Declaration
+export const getProductDetails = async (req, res) => {
+  try {
+    const { id } = req.params;//Extracting the ID
+    const productDetails = await Product.findById(id);   //Fetching Product Details
+
+    res.status(200).json({
+      success: true,//Success Response
+      message: "fetche product Details",
+      data: productDetails,
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }//Error Handling
+};
+
 // export const createProduct = async (req, res,next) => {
 //   try {
 //     const{title,description,price,category,brand,rating}=req.body;
