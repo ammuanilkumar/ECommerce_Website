@@ -1,6 +1,6 @@
 import React from 'react'
 
-const HomeRoot = () => {
+ export const HomeRoot = () => {
   return (
     <div>
       Home root
@@ -8,7 +8,5 @@ const HomeRoot = () => {
   )
 }
 
-export default HomeRoot
 
-// okk nammaa  eppaaa  2 user anuuu  okkaa  oruu user alc create cheythathuthee  hom illl   evidaaao user vendey nno  njn  voice edamm 
 

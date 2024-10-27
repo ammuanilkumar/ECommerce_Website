@@ -1,6 +1,6 @@
 import React from 'react';
 
-const AboutUsPage = () => {
+export const AboutUsPage = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-gray-100">
       <div className="max-w-2xl w-full text-center">
@@ -24,4 +24,4 @@ const AboutUsPage = () => {
   );
 };
 
-export default AboutUsPage;
+

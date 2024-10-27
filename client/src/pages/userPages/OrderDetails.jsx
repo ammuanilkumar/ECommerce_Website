@@ -1,6 +1,6 @@
 import React from 'react'
 
-const OrderDetails = () => {
+export const OrderDetails = () => {
 
     const order ={
         id: '#123456',
@@ -93,4 +93,3 @@ const OrderDetails = () => {
 )
 }
 
-export default OrderDetails

@@ -11,10 +11,10 @@ import { UserLayout } from "../layouts/UserLayout";
 import { ErrorPage } from "../pages/errorPage/ErrorPage";
 import { UserAuth } from "./protectedRoutes/UserAuth";
 
-import HomeRoot from "../pages/root/HomeRoot";
-import UserHome from "../pages/userPages/UserHome";
+import{ HomeRoot }from "../pages/root/HomeRoot";
+import{ UserHome }from "../pages/userPages/UserHome";
 import { UserProfile}  from "../pages/userPages/UserProfile";
-import OrderDetails from "../pages/userPages/OrderDetails";
+import {OrderDetails} from "../pages/userPages/OrderDetails";
 // import { Offers } from "../pages/userPages/Offers"; // Added this import
 
 export const router = createBrowserRouter([
