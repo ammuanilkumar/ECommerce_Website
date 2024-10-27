@@ -9,7 +9,7 @@ import { ProductPage } from "../pages/userPages/ProductPage";
 import { CartPage } from "../pages/userPages/CartPage";
 import { UserLayout } from "../layouts/UserLayout";
 import { ErrorPage } from "../pages/errorPage/errorPage";
-import { UserAuth } from "./protectedRoutes/userAuth";
+import { UserAuth } from "./protectedRoutes/UserAuth";
 
 import HomeRoot from "../pages/root/HomeRoot";
 import UserHome from "../pages/userPages/UserHome";
