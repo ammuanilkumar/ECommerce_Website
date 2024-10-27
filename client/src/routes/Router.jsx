@@ -8,7 +8,7 @@ import { ProductDetails } from "../pages/userPages/ProductDetails";
 import { ProductPage } from "../pages/userPages/ProductPage";
 import { CartPage } from "../pages/userPages/CartPage";
 import { UserLayout } from "../layouts/UserLayout";
-import { ErrorPage } from "../pages/errorPage/errorPage";
+import { ErrorPage } from "../pages/errorPage/ErrorPage";
 import { UserAuth } from "./protectedRoutes/UserAuth";
 
 import HomeRoot from "../pages/root/HomeRoot";
