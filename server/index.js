@@ -4,13 +4,15 @@ import express from 'express'
 import apiRouter from './routes/index.js'
 import { connectDB } from './config/db.js'
 import cookieParser from 'cookie-parser';
-import cors from 'cors'
+import cors from 'cors';
+//import {handleError} from '/src/utils/console.error.js';
+
 
 
 const app = express()
 app.use(
   cors({
-  origin:"http://localhost:5173",
+  origin:["https://ecommerce-website-server-sigma.vercel.app/","http://localhost:5173"],
   credentials: true,
   })
 
