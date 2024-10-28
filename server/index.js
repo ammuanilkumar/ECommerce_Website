@@ -10,7 +10,8 @@ import cors from 'cors'
 const app = express()
 app.use(
   cors({
-  origin:["https://e-commerce-website-client-kappa.vercel.app","http://localhost:5173"],
+    //"https://e-commerce-website-client-kappa.vercel.app",
+  origin:"http://localhost:5173",
   credentials: true,
   })
 
