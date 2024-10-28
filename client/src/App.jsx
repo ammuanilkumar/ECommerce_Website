@@ -4,7 +4,7 @@ import { RouterProvider } from "react-router-dom";
 import { router } from "./routes/Router.jsx";
 import toast, { Toaster } from 'react-hot-toast';
 //import toast from "react-hot-toast";
-
+//
 function App() {
   return (
     <>

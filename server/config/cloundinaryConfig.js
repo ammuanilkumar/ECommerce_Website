@@ -16,5 +16,6 @@ cloudinary.config({
 //   api_key: "833423173576493",
 //   api_secret: "lkvMi9bYX25nBhjV_13ov_Cikk4",
 // });
+//
 
 export const cloudinaryInstance = cloudinary;
