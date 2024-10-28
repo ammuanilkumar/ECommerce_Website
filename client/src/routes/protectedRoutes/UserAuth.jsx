@@ -14,6 +14,7 @@ export const UserAuth = ({ children }) => {
           url: "/user/check-user",
           method: "GET",
           withCredentials: true,
+          
         });
 
         return response?.data;
