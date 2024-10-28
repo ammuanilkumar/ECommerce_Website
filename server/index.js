@@ -1,37 +1,35 @@
-import dotenv from 'dotenv';
-dotenv.config(); 
-import express from 'express'
-import apiRouter from './routes/index.js'
-import { connectDB } from './config/db.js'
-import cookieParser from 'cookie-parser';
-import cors from 'cors'
+import dotenv from "dotenv";
+dotenv.config();
+import express from "express";
+import apiRouter from "./routes/index.js";
+import { connectDB } from "./config/db.js";
+import cookieParser from "cookie-parser";
+import cors from "cors";
 
-
-const app = express()
+const app = express();
 app.use(
   cors({
-    //"https://e-commerce-website-client-kappa.vercel.app",
-  origin:["https://ecommerce-website-client-sk3t.onrender.com","http://localhost:5173"],
-  credentials: true,
+    origin: [
+      "https://ecommerce-website-client-sk3t.onrender.com",
+      "http://localhost:5173",
+    ],
+    credentials: true,
   })
-
 );
 
+app.use(express.json());
+app.use(cookieParser());
+const port = process.env.PORT || 4001;
 
-app.use(express.json())
-app.use(cookieParser())
-const port = process.env.PORT || 4001
+connectDB();
+console.log("Server is about to start");
 
-connectDB()
-console.log('Server is about to start'); 
+app.get("/", (req, res) => {
+  res.send("Hello World !!!");
+});
 
-app.get('/', (req, res) => {
-  res.send('Hello World !!!')
-})
-
-
-app.use('/api', apiRouter)
+app.use("/api", apiRouter);
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+  console.log(`Example app listening on port ${port}`);
+});

@@ -16,21 +16,19 @@ export const LoginPage = () => {
   const handleLogin = async (data) => {
     try {
       const response = await userLogin(data);
-     
 
       if (response && response.success) {
         navigate("/user/home");
         toast.success("Login successful");
       } else {
-        toast.error(response?.message || "Login failed   !!!");
-        console.log("error ===>")
+        toast.error(response?.message || "Login failed!!!");
+        console.log("Login error:", response?.message || "Unknown error");
       }
     } catch (error) {
-      console.error(error);
-      toast.error("Login error");
+      console.error("Login error:", error);
+      toast.error("Login error. Please try again.");
     }
   };
-
 
   return (
     <div className="hero bg-base-200 py-20">
@@ -53,6 +51,7 @@ export const LoginPage = () => {
                 {...register("email", { required: "Email is required", pattern: { value: /^\S+@\S+$/i, message: "Invalid email format" } })} 
                 placeholder="email" 
                 className="input input-bordered" 
+                autoComplete="email" 
               />
               {errors.email && <p className="text-red-500">{errors.email.message}</p>}
             </div>
@@ -65,6 +64,7 @@ export const LoginPage = () => {
                 {...register("password", { required: "Password is required", minLength: { value: 6, message: "Password must be at least 6 characters" } })} 
                 placeholder="password" 
                 className="input input-bordered" 
+                autoComplete="current-password" 
               />
               {errors.password && <p className="text-red-500">{errors.password.message}</p>}
               <label className="label">

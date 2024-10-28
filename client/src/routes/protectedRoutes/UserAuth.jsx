@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { axiosInstance } from "./../../config/axiosInstance";
 import { useLocation, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 export const UserAuth = ({ children }) => {
   const navigate = useNavigate();
@@ -18,7 +19,8 @@ export const UserAuth = ({ children }) => {
         return response?.data;
       } catch (error) {
         navigate("/login");
-        console.error("Authentication check failed:", error);
+        console.error("Authentication check failed:", error); 
+      
       }
     };
 
