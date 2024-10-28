@@ -11,7 +11,7 @@ const app = express()
 app.use(
   cors({
     //"https://e-commerce-website-client-kappa.vercel.app",
-  origin:"http://localhost:5173",
+  origin:["https://ecommerce-website-client-sk3t.onrender.com","http://localhost:5173"],
   credentials: true,
   })
 
