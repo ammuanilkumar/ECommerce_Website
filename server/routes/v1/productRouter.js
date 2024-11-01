@@ -2,7 +2,9 @@ import express from "express";
 import {
   getProductList,
   createProduct,
-  updateProduct,getProductDetails
+  updateProduct,
+  getProductDetails,
+  
 } from "../../controller/productController.js";
 //import {getProductList} from "../../controller/productController.js";
 
@@ -14,7 +16,7 @@ const router = express.Router();
 router.get("/productList", authUser, getProductList);
 router.get("/details/:id", authUser, getProductDetails);
 router.put("/update/:id", updateProduct);
-router.delete("/delete");
+//router.delete("/delete");
 
 router.post("/create", upload.single("image"),authAdmin, createProduct);
 
