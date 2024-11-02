@@ -80,5 +80,18 @@ export const router = createBrowserRouter([
         element: <CartPage />,
       },
     ],
+    
   },
+  // {
+  //   path: "adminlogin",
+  //   element: <AdminLoginPage />,
+  // },
+//   {
+//     path: "admin",
+//     element: (
+//       <AdminAuth>
+//         <AdminLayout />
+//       </AdminAuth>
+// ),
+
 ]);

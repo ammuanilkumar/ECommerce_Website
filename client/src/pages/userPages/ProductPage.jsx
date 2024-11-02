@@ -28,7 +28,7 @@ export const ProductPage = () => {
       <h1 className="font-bold text-4xl my-5">List of products</h1>
       <div className="grid grid-cols-3 gap-x-10 gap-y-10">
       {products.map((value) => (
-        <ProductCards key={value.id} product={value} />
+        <ProductCards key={value._id} product={value} />
       ))}
     </div>
     </div>
