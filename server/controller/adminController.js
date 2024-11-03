@@ -42,7 +42,7 @@ export const adminCreate = async (req, res) => {
     console.error(error);
     res.status(500).json({ success: false, message: "Internal server error" });
   }
-};
+};   
 
 export const adminLogin = async (req, res) => {
   try {

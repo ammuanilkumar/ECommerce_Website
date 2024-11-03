@@ -95,7 +95,7 @@ export const UserProfile = () => {
       <div className="flex space-x-4">
         <button className="btn btn-primary">Edit Profile</button>
         {/* <button className="btn btn-outline btn-secondary">  */}
-        <Link to="/user/orderdetails" className="w-full">
+        <Link to={"/user/orderdetails"} className="w-full">
     <button className="btn btn-outline btn-secondary">
       Order Details
     </button>

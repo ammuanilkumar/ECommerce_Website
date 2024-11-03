@@ -39,7 +39,7 @@ export const ErrorPage = () => {
           <div className="w-24 h-24 bg-indigo-500 rounded-full animate-bounce"></div>
         </div>
         <Link
-          to="/"
+          to={"/"}
           className="px-8 py-3 bg-indigo-500 text-white rounded-full hover:bg-indigo-600 transition duration-300"
         >
           Go Back Home

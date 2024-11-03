@@ -12,6 +12,7 @@ export const ProductPage = () => {
       const response = await axiosInstance({
         url: "/product/productList",
         method: "GET",
+        withCredentials: true,
       });
       setProducts(response?.data?.data);
       console.log("response ===", response);

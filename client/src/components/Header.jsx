@@ -11,25 +11,25 @@ const Header = () => {
 
       <nav className="flex space-x-8 text-lg font-semibold">
         <Link
-          to="/"
+          to={"/"}
           className="hover:text-gray-200 transition-colors duration-300"
         >
           Home
         </Link>
         <Link
-          to="/about"
+          to={"/about"}
           className="hover:text-gray-200 transition-colors duration-300"
         >
           About
         </Link>
         <Link
-          to="/user/product"
+          to={"/user/product"}
           className="hover:text-gray-200 transition-colors duration-300"
         >
           Product
         </Link>
         <Link
-          to="/user/offers"
+          to={"/user/offers"}
           className="hover:text-gray-200 transition-colors duration-300"
         >
           OFFERS
@@ -37,7 +37,7 @@ const Header = () => {
       </nav>
       <div className="flex items-center gap-8">
         <DarkMode/>
-        <Link to="/signup">
+        <Link to={"/signup"}>
         <button className="bg-white text-blue-600 px-6 py-2 rounded-full font-semibold shadow-md hover:bg-gray-100 transition-colors duration-300">
           Login
         </button>

@@ -26,14 +26,14 @@ export const UserHeader = () => {
         </Link>
 
         <Link
-          to="/user/product"
+          to={"/user/product"}
           className="hover:text-gray-200 transition-colors duration-300"
         >
           Product
         </Link>
 
         <Link
-          to="/user/offers"
+          to={"/user/offers"}
           className="hover:text-gray-200 transition-colors duration-300"
         >
           OFFERS

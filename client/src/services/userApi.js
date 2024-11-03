@@ -38,6 +38,7 @@ export const userCheck = async () => {
     const response = await axiosInstance({
       url: "/user/check-user",
       method: "GET",
+      withCredentials: true,
      
     });
     return response?.data;
