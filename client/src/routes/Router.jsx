@@ -83,22 +83,18 @@ export const router = createBrowserRouter([
         element: <CartPage />,
       },
     ],
-    
-  },
-  {
-    path: "adminlogin",
-    element: <AdminLoginPage />,
+    // nathaa error anuu  slack aych dk verum 
   },
   // {
-  //   path: "admin",
-  //   element: (
-  //     <AdminAuth>
-  //       <AdminLayout />
-  //     </AdminAuth>
-  //   ),
+  //   path: "adminlogin",
+  //   // element: <AdminLoginPage />,
   // },
-  {
-    path: "*",
-    element: <ErrorPage />, //  component to handle undefined routes
-  },
+  // path: "admin",
+  // element: (
+  //   <AdminAuth>
+  //     <AdminLayout />
+  //   </AdminAuth>
+  // ),
+
+  // evidaa   nee bakkii set akkanamm emtoo  ok
 ]);

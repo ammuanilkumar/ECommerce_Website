@@ -133,7 +133,10 @@ export const checkUser = async (req, res) => {
       return res
         .status(401)
         .json({ success: false, message: "User not authenticated" });
+        
+
     }
+   
 
     res.json({ success: true, message: "User authenticated" });
   } catch (error) {
