@@ -15,6 +15,9 @@ import { UserHome } from "../pages/userPages/UserHome";
 import { UserProfile } from "../pages/userPages/UserProfile";
 import { OrderDetails } from "../pages/userPages/OrderDetails";
 import { UserAuth } from "./protectedRoutes/UserAuth";
+// import { AdminAuth } from "./protectedRoutes/AdminAuth";
+ import {  AdminLoginPage  } from  "./../pages/adminPages/AdminLogin";
+
 
 // import { Offers } from "../pages/userPages/Offers"; // Added this import
 
@@ -64,7 +67,7 @@ export const router = createBrowserRouter([
         element: <UserProfile />,
       },
       {
-        path: "/user/orderdetails",
+        path: "orderdetails",
         element: <OrderDetails />,
       },
       {
@@ -82,16 +85,20 @@ export const router = createBrowserRouter([
     ],
     
   },
+  {
+    path: "adminlogin",
+    element: <AdminLoginPage />,
+  },
   // {
-  //   path: "adminlogin",
-  //   element: <AdminLoginPage />,
+  //   path: "admin",
+  //   element: (
+  //     <AdminAuth>
+  //       <AdminLayout />
+  //     </AdminAuth>
+  //   ),
   // },
-//   {
-//     path: "admin",
-//     element: (
-//       <AdminAuth>
-//         <AdminLayout />
-//       </AdminAuth>
-// ),
-
+  {
+    path: "*",
+    element: <ErrorPage />, //  component to handle undefined routes
+  },
 ]);
