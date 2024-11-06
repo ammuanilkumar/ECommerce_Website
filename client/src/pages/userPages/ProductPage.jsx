@@ -5,8 +5,13 @@ import React, { useEffect, useState } from "react";
 
 import { axiosInstance } from "../../config/axiosInstance";
 import ProductCards from "../../components/ui/cards";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProductList } from "../../redux/features/productSlice";
 export const ProductPage = () => {
-  const [products, setProducts] = useState([]);
+ // const [products, setProducts] = useState([]);
+  const dispatch = useDispatch();
+  const {products} = useSelector ((state) =>state.product);
+
   const fetchProducts = async () => {
     try {
       const response = await axiosInstance({
@@ -14,7 +19,8 @@ export const ProductPage = () => {
         method: "GET",
         withCredentials: true,
       });
-      setProducts(response?.data?.data);
+      dispatch (fetchProductList(response?.data?.data))
+      //setProducts(response?.data?.data);
       console.log("response ===", response);
     } catch (error) {
       console.log(error);

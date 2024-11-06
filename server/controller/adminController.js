@@ -1,6 +1,8 @@
 import bcrypt from "bcrypt";
 import { Admin } from "../models/adminModel.js";
 import { generateAdminToken } from "../utils/generateAdminToken.js";
+import { Product } from "../models/productModel.js";
+import { User } from "../models/userModel.js";
 
 export const adminCreate = async (req, res) => {
   try {
@@ -42,7 +44,7 @@ export const adminCreate = async (req, res) => {
     console.error(error);
     res.status(500).json({ success: false, message: "Internal server error" });
   }
-};   
+};
 
 export const adminLogin = async (req, res) => {
   try {
@@ -103,12 +105,16 @@ export const checkAdmin = async (req, res) => {
   if (!admin) {
     return res
       .status(400)
-      .json({ success: false, message: "admin not authericated" });
+      .json({ success: false, message: "Admin not authenticated" });
   }
+
   try {
+    return res
+      .status(200)
+      .json({ success: true, message: "Admin authenticated" });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ sucess: false, message: "Internal server error" });
+    console.error("Error in checkAdmin function:", error);
+    res.status(500).json({ success: false, message: "Internal server error" });
   }
 };
 
@@ -257,12 +263,7 @@ export const deleteUser = async (req, res) => {
     const { id } = req.params;
     const admin = req.admin;
 
-    if (admin.email !== "ramjithkr5441@gmail.com") {
-      return res.status(403).json({
-        success: false,
-        message: "Only superadmins can delete users.",
-      });
-    }
+  
 
     const user = await User.findById(id);
     if (!user) {
