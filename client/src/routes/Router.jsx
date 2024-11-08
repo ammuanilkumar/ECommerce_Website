@@ -18,7 +18,7 @@ import { AdminAuth } from "./protectedRoutes/AdminAuth";
 
 import { AdminHeader } from "../components/admin/AdminHeader";
 
-import { AdminProducts } from "../pages/adminPages/AdminProducts";
+import  AdminProducts  from "../pages/adminPages/AdminProducts";
 import AdminProfile from "../pages/adminPages/AdminProfile";
 
 import AdminCreateProduct from "../pages/adminPages/AdminCreateProduct";
