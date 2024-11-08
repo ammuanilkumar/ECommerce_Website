@@ -15,9 +15,14 @@ export const CartPage = () => {
         withCredentials: true,
       });
 
-      const allCartItems =
-        response?.data?.data?.cart?.flatMap((cart) => cart.items) || [];
-      setCartProduct(allCartItems);
+      if (response?.data?.data?.cart) {
+        const allCartItems = response.data.data.cart.flatMap(
+          (cart) => cart.items
+        );
+        setCartProduct(allCartItems);
+      } else {
+        setError("Product details not found");
+      }
     } catch (error) {
       console.error("Failed to fetch product details:", error);
       setError("Failed to fetch product details");
@@ -39,7 +44,7 @@ export const CartPage = () => {
 
       if (response.status === 200) {
         setCartProduct((prev) =>
-          prev.filter((product) => product.product._id !== id)
+          prev.filter((product) => product.product._id.toString() !== id)
         );
       }
     } catch (error) {
@@ -51,20 +56,30 @@ export const CartPage = () => {
   const handleQuantityChange = async (id, change) => {
     try {
       const currentItem = cartProduct.find(
-        (product) => product.product._id === id
+        (product) => product.product._id.toString() === id
       );
-      if (!currentItem) return;
+      if (!currentItem) {
+        console.error("Item not found in cart for ID:", id);
+        return;
+      }
 
       const newQuantity = currentItem.quantity + change;
-      if (newQuantity < 1) return await handleRemoveProduct(id);
 
-      setCartProduct(
-        cartProduct.map((product) =>
-          product.product._id === id
-            ? { ...product, quantity: newQuantity }
-            : product
-        )
+      if (newQuantity < 1) {
+        await handleRemoveProduct(id);
+        return;
+      }
+
+      const updatedCart = cartProduct.map((product) =>
+        product.product._id.toString() === id
+          ? { ...product, quantity: newQuantity }
+          : product
       );
+
+      setCartProduct(updatedCart);
+
+      // Log to check if the correct quantity is sent to the API
+      console.log(`Updating ${id} to new quantity: ${newQuantity}`);
 
       await axiosInstance({
         url: `/cart/update/${id}`,
@@ -78,6 +93,7 @@ export const CartPage = () => {
     }
   };
 
+  // Calculate Subtotal
   const subtotal = cartProduct.reduce(
     (sum, item) => sum + (item.product.price || 0) * item.quantity,
     0
@@ -89,6 +105,10 @@ export const CartPage = () => {
   const makePayment = async () => {
     try {
       const stripePublishableKey = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY;
+      if (!stripePublishableKey) {
+        throw new Error("Stripe publishable key is not defined");
+      }
+
       const stripe = await loadStripe(stripePublishableKey);
 
       const response = await axiosInstance({
@@ -98,7 +118,17 @@ export const CartPage = () => {
       });
 
       const sessionId = response?.data?.sessionId;
-      await stripe.redirectToCheckout({ sessionId });
+
+      if (!sessionId) {
+        console.error("Failed to create a checkout session.");
+        return;
+      }
+
+      const result = await stripe.redirectToCheckout({ sessionId });
+
+      if (result.error) {
+        console.error("Stripe Checkout Error:", result.error.message);
+      }
     } catch (error) {
       console.error("Payment Error:", error);
     }
@@ -109,6 +139,7 @@ export const CartPage = () => {
       <h1 className="mb-10 text-center text-2xl font-bold">Cart Items</h1>
 
       <div className="mx-auto max-w-5xl px-6 md:flex md:space-x-6 xl:px-0">
+        {/* Cart Items Section */}
         <div className="rounded-lg md:w-2/3">
           {error ? (
             <p className="text-red-500">{error}</p>
@@ -116,8 +147,9 @@ export const CartPage = () => {
             cartProduct.map((product) => (
               <div
                 key={product.product._id}
-                className="mb-6 rounded-lg bg-white p-6 shadow-md sm:flex"
+                className="justify-between mb-6 rounded-lg bg-white p-6 shadow-md sm:flex sm:justify-start"
               >
+                {/* Image Container */}
                 <div className="w-full sm:w-40">
                   <img
                     src={product.product.image}
@@ -127,37 +159,57 @@ export const CartPage = () => {
                 </div>
 
                 <div className="sm:ml-4 sm:flex sm:w-full sm:justify-between">
-                  <div>
-                    <h2 className="text-lg font-bold text-gray-900">
-                      {product.product.title}
-                    </h2>
-                    <p className="text-sm">₹{product.product.price}</p>
+                  <div className="mt-5 sm:mt-0">
+                    {product.product?.title && (
+                      <h2 className="text-lg font-bold text-gray-900">
+                        {product.product.title}
+                      </h2>
+                    )}
                   </div>
-                  <div className="flex items-center">
-                    <button
-                      onClick={() =>
-                        handleQuantityChange(product.product._id, -1)
-                      }
-                    >
-                      -
-                    </button>
-                    <input
-                      className="w-8 text-center"
-                      value={product.quantity}
-                      readOnly
-                    />
-                    <button
-                      onClick={() =>
-                        handleQuantityChange(product.product._id, 1)
-                      }
-                    >
-                      +
-                    </button>
-                    <button
-                      onClick={() => handleRemoveProduct(product.product._id)}
-                    >
-                      Remove
-                    </button>
+                  <div className="mt-4 flex justify-between sm:space-y-6 sm:mt-0 sm:block sm:space-x-6">
+                    <div className="flex items-center border-gray-100">
+                      <span
+                        className="cursor-pointer rounded-l bg-gray-100 py-1 px-3.5 duration-100 hover:bg-blue-500 hover:text-white"
+                        onClick={() =>
+                          handleQuantityChange(product.product._id, -1)
+                        }
+                      >
+                        -
+                      </span>
+                      <input
+                        className="h-8 w-8 border bg-white text-center text-xs outline-none"
+                        type="number"
+                        readOnly
+                        value={product.quantity}
+                        min={1}
+                      />
+                      <span
+                        className="cursor-pointer rounded-r bg-gray-100 py-1 px-3 duration-100 hover:bg-blue-500 hover:text-white"
+                        onClick={() =>
+                          handleQuantityChange(product.product._id, 1)
+                        }
+                      >
+                        +
+                      </span>
+                    </div>
+                    <div className="flex items-center space-x-4">
+                      <p className="text-sm">₹{product.product.price}</p>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth="1.5"
+                        stroke="currentColor"
+                        className="h-5 w-5 cursor-pointer duration-150 hover:text-red-500"
+                        onClick={() => handleRemoveProduct(product.product._id)}
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M6 18L18 6M6 6l12 12"
+                        />
+                      </svg>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -167,13 +219,24 @@ export const CartPage = () => {
           )}
         </div>
 
+        {/* Subtotal Section */}
         <div className="mt-6 h-full rounded-lg border bg-white p-6 shadow-md md:mt-0 md:w-1/3">
-          <p>Subtotal: ₹{subtotal.toFixed(2)}</p>
-          <p>Shipping: ₹{shipping.toFixed(2)}</p>
-          <p>Total: ₹{total.toFixed(2)} INR</p>
+          <div className="mb-2 flex justify-between">
+            <p className="text-gray-700">Subtotal</p>
+            <p className="text-gray-700">₹{subtotal.toFixed(2)}</p>
+          </div>
+          <div className="flex justify-between">
+            <p className="text-gray-700">Shipping</p>
+            <p className="text-gray-700">₹{shipping.toFixed(2)}</p>
+          </div>
+          <hr className="my-4" />
+          <div className="flex justify-between">
+            <p className="text-lg font-bold">Total</p>
+            <p className="text-lg font-bold"> ₹{total.toFixed(2)} INR</p>
+          </div>
           <button
             onClick={makePayment}
-            className="mt-6 w-full bg-blue-500 text-white"
+            className="mt-6 w-full rounded-md bg-blue-500 py-1.5 font-medium text-white hover:bg-blue-600"
           >
             Check out
           </button>
@@ -182,90 +245,3 @@ export const CartPage = () => {
     </div>
   );
 };
-
-// import React from 'react'
-
-// export const CartPage = () => {
-//   return (
-//     <div>
-//       cartPage
-//     </div>
-//   )
-// }
-
-// import React, { useContext, useEffect } from 'react';
-// import { CartContext } from '../contexts/CartContext'; // Assuming you have a CartContext for managing cart state
-// import { Link } from 'react-router-dom';
-// import { Toaster, toast } from 'react-hot-toast'; // Using Toaster for notifications
-
-// export const CartPage = () => {
-//   const { cartItems, removeFromCart, updateQuantity, totalAmount } = useContext(CartContext);
-
-//   useEffect(() => {
-//     if (cartItems.length === 0) {
-//       toast.info('Your cart is empty.');
-//     }
-//   }, [cartItems]);
-
-//   const handleQuantityChange = (item, quantity) => {
-//     if (quantity < 1) {
-//       removeFromCart(item.id);
-//     } else {
-//       updateQuantity(item.id, quantity);
-//     }
-//   };
-
-//   return (
-//     <div className="container mx-auto p-4">
-//       <Toaster />
-//       <h2 className="text-2xl font-bold mb-4">Shopping Cart</h2>
-
-//       {cartItems.length === 0 ? (
-//         <div className="text-center">
-//           <p className="text-gray-500">Your cart is empty.</p>
-//           <Link to="/products" className="text-blue-500 underline">
-//             Continue Shopping
-//           </Link>
-//         </div>
-//       ) : (
-//         <div>
-//           <ul className="space-y-4">
-//             {cartItems.map((item) => (
-//               <li key={item.id} className="flex items-center justify-between border-b pb-4">
-//                 <div className="flex items-center space-x-4">
-//                   <img src={item.image} alt={item.name} className="w-20 h-20 object-cover rounded" />
-//                   <div>
-//                     <h3 className="font-semibold">{item.name}</h3>
-//                     <p className="text-gray-500">${item.price.toFixed(2)}</p>
-//                   </div>
-//                 </div>
-//                 <div className="flex items-center space-x-2">
-//                   <input
-//                     type="number"
-//                     value={item.quantity}
-//                     onChange={(e) => handleQuantityChange(item, parseInt(e.target.value))}
-//                     className="border rounded w-16 p-1 text-center"
-//                   />
-//                   <button
-//                     onClick={() => removeFromCart(item.id)}
-//                     className="text-red-500 hover:underline"
-//                   >
-//                     Remove
-//                   </button>
-//                 </div>
-//               </li>
-//             ))}
-//           </ul>
-//           <div className="mt-6 flex justify-between items-center">
-//             <h3 className="text-lg font-semibold">Total: ${totalAmount.toFixed(2)}</h3>
-//             <Link to="/checkout" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-//               Proceed to Checkout
-//             </Link>
-//           </div>
-//         </div>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default CartPage;

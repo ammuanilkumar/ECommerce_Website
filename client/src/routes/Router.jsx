@@ -15,20 +15,17 @@ import { OrderDetails } from "../pages/userPages/OrderDetails";
 import { UserAuth } from "./protectedRoutes/UserAuth";
 import { AdminLoginPage } from "./../pages/adminPages/AdminLogin";
 import { AdminAuth } from "./protectedRoutes/AdminAuth";
-import {HomeAdmin } from "./../pages/adminPages/HomeAdmin";
-import { AdminProfile } from "./../pages/adminPages/AdminProfile";
-import {AdminProductPage } from "./../pages/adminPages/AdminProductPage";
 
-import {AdminProductDetails} from "./../pages/adminPages/AdminProductDetails";
+import { AdminHeader } from "../components/admin/AdminHeader";
 
-import {CreateProduct} from "./../pages/adminPages/CreateProduct";
-import {CrudProduct} from "./../pages/adminPages/CrudProduct";
-import {AdminOrderDetails} from "../pages/adminPages/AdminOrderDetails";
-import {UpdateProduct} from "./../pages/adminPages/UpdateProduct";
+import { AdminProducts } from "../pages/adminPages/AdminProducts";
+import AdminProfile from "../pages/adminPages/AdminProfile";
 
-import { GetUsersList } from "./../pages/adminPages/GetUserList"; // For named export
-// import{AdminDashboardLayout} from "../layouts/AdminLayout"; // For named"
-import { AdminDashboardLayout } from "../layouts/AdminDashboardLayout";
+import AdminCreateProduct from "../pages/adminPages/AdminCreateProduct";
+import AdminDElAndUpdate from "../pages/adminPages/AdminDElAndUpdate";
+import AdminUserOrder from "../pages/adminPages/AdminUserOrder";
+import AdminUserDetails from "../pages/adminPages/AdminUserDetails";
+
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -99,58 +96,35 @@ export const router = createBrowserRouter([
     path: "admin",
     element: (
       <AdminAuth>
-        <UserLayout />
-       </AdminAuth> 
-   
+        <AdminHeader />
+      </AdminAuth>
     ),
     children: [
       {
-        path: "home",
-        element: <HomeAdmin />,
+        path: "products",
+        element: <AdminProducts />,
       },
-      
+
       {
         path: "profile",
-        element: <AdminProfile />,
+        element:<AdminProfile />,
       },
-      
-      {
-        path: "product",
-        element: <AdminProductPage />,
-      },
-      {
-        path: "product-details/:id",
-        element: <AdminProductDetails />,
-      },
-     
-    ],
-  },
-
-
-  {
-    path: "dashboard",
-    element: <AdminDashboardLayout />,
-    children: [
       {
         path: "create-product",
-        element: <CreateProduct />,
+        element: <AdminCreateProduct />,
       },
       {
-        path: "crud-product",
-        element: <CrudProduct />,
+        path: "delete-and-update",
+        element: <AdminDElAndUpdate />,
       },
       {
         path: "user-orders",
-        element: <AdminOrderDetails />,
+        element: <AdminUserOrder/>,
       },
       {
-        path: "update-product/:id",
-        element: <UpdateProduct />,
-      },
-      {
-        path: "get-users-details",
-        element: <GetUsersList />,
+        path: "user-details",
+        element: <AdminUserDetails/>,
       },
     ],
   },
-])
+]);

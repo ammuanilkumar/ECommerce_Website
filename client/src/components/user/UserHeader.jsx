@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { DarkMode } from "../ui/DarkMode";
 import { CircleUserRound } from "lucide-react";
 import { ShoppingCart } from "lucide-react";
-
+import { HeartIcon } from "@heroicons/react/24/outline";
 export const UserHeader = () => {
   return (
     <header className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg h-16 flex items-center justify-between px-6 md:px-12">
@@ -41,6 +41,12 @@ export const UserHeader = () => {
       </nav>
       <div className="flex items center gap-8">
         <DarkMode />
+        <Link to="/wishlist" className="relative flex items-center">
+          <HeartIcon className="h-6 w-6 text-white hover:text-red-300" />
+          <span className="absolute top-0 right-0 bg-red-500 text-white rounded-full h-4 w-4 text-xs flex items-center justify-center">
+            3 {/* Replace with dynamic count if available */}
+          </span>
+        </Link>
         <Link to={"/user/profile"}>
           <CircleUserRound />
         </Link>

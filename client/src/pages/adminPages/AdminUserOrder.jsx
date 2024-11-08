@@ -1,6 +1,6 @@
 import React from 'react'
 
-const AdminProfile = () => {
+const AdminUserOrder = () => {
   return (
     <div>
       
@@ -8,4 +8,4 @@ const AdminProfile = () => {
   )
 }
 
-export default AdminProfile
+export default AdminUserOrder

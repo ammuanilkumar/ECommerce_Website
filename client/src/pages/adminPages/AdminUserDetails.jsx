@@ -1,6 +1,6 @@
 import React from 'react'
 
-const AdminProfile = () => {
+const AdminUserDetails = () => {
   return (
     <div>
       
@@ -8,4 +8,4 @@ const AdminProfile = () => {
   )
 }
 
-export default AdminProfile
+export default AdminUserDetails
