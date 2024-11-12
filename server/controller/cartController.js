@@ -173,3 +173,35 @@ export const updateCart = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+export const cartRemoveAll = async (req, res) => {
+  try {
+    const userDetails = req.user;
+    console.log("userDetails====", userDetails);
+
+    // Find the user by email and populate the cart
+    const user = await User.findOne({ email: userDetails.email }).populate(
+      "cart"
+    );
+
+    if (!user || !user.cart || user.cart.length === 0) {
+      return res.status(404).json({ message: "Cart not found" });
+    }
+
+    // Iterate through the carts and clear all items
+    for (let cart of user.cart) {
+      if (cart.items.length > 0) {
+        cart.items = []; // Clear the cart items
+        await cart.save(); // Save each updated cart
+        console.log("cart.save====", cart);
+      }
+    }
+
+    return res
+      .status(200)
+      .json({ message: "All products removed from cart successfully" });
+  } catch (error) {
+    console.error("Error removing all products from cart:", error);
+    return res.status(500).json({ message: "Server error" });
+  }
+};

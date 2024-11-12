@@ -46,12 +46,12 @@ const userSchema = new mongoose.Schema(
         ref: "Cart",
       },
     ],
-    // session : [
-    //   {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: " session ",
-    //   },
-    // ],
+    session : [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: " session ",
+      },
+    ],
   },
   {
     timestamps: true,

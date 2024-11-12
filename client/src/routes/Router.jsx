@@ -28,6 +28,8 @@ import AdminDElAndUpdate from "../pages/adminPages/AdminDElAndUpdate";
 import AdminUserOrder from "../pages/adminPages/AdminUserOrder";
 import AdminUserDetails from "../pages/adminPages/AdminUserDetails";
 import { AdminLayout } from "../layouts/AdminLayout";
+import { SuccessPage } from "../pages/userPages/SuccessPage";
+import { CancelPage } from "../pages/userPages/CancelPage";
 
 export const router = createBrowserRouter([
   {
@@ -92,6 +94,19 @@ export const router = createBrowserRouter([
       {
         path: "wishlist",
         element: <WishlistPage />,
+      },
+      {
+        path: "payment",
+        children: [
+          {
+            path: "success",
+            element: <SuccessPage />,
+          },
+          {
+            path: "cancel",
+            element: <CancelPage />,
+          },
+        ],
       },
     ],
   },

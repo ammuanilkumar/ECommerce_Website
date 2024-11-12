@@ -1,13 +1,14 @@
-import express from 'express';
-const router =express.Router();
+import express from "express";
+import {
+  createCheckoutSession,
+  sessionStatus,
+} from "../../controller/paymentController.js";
+import { authUser } from "../../middlewares/authUser.js";
 
-router.get('/',async (req, res,next) => {
-    console.log('user get method accessed');
-})
+const router = express.Router();
 
-router.post('/', async (req, res, next) => {
-    console.log('user post method accessed');
-})
+router.post("/create-checkout-session", authUser, createCheckoutSession);
 
+router.get("/session-status", authUser, sessionStatus);
 
-export default router
+export default router;
