@@ -1,7 +1,17 @@
-import mongoose from "mongoose";
-import { User } from "../../models/userModel.js";
-import { Product } from "../../models/productModel.js";
-import { Wishlist } from "../../models/wishlistModel.js";
+// import mongoose from "mongoose";
+//  import  {User }from " ../../models/userModel.js";
+// import { Product}  from "../../models/productModel.js";
+// //import Wishlist from "../../models/wishlistModel.js";
+ import{ Wishlist} from "../models/wishlistModel.js";  // Correct
+ 
+ import {Product} from "../models/productModel.js"; // Example for product model import
+ import { User } from "../models/userModel.js";
+
+ 
+
+
+//import User from "../../models/userModel.js"; // Example for user model import
+
 
 export const addToWishlist = async (req, res) => {
     const userId = req.user.id; // Assuming `authUser` middleware attaches `user` to `req`

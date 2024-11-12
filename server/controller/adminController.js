@@ -81,21 +81,19 @@ export const adminLogin = async (req, res) => {
 };
 export const adminProfile = async (req, res) => {
   try {
-    const { id } = req.params;
+    // const {id} = req.id
+    const admin = req.admin;
+    // const adminData = await Admin.findById(id);
 
-    const adminData = await Admin.findById(id);
-
-    if (!adminData) {
-      return res
-        .status(404)
-        .json({ success: false, message: "admin not found" });
-    }
+    const adminData = await Admin.findOne({ email: admin.email }).select(
+      "-password"
+    );
 
     res
       .status(200)
-      .json({ success: true, message: "admin data fetched", data: adminData });
+      .json({ success: true, message: "Admin data fetched", data: adminData });
   } catch (error) {
-    console.error(error);
+    console.log(error);
     res.status(500).json({ success: false, message: "Internal server error" });
   }
 };

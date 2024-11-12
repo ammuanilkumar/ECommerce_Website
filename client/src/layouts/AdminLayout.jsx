@@ -1,16 +1,16 @@
 import React from "react";
 import { Footer } from "../components/Footer";
 import { AdminHeader } from "../components/admin/AdminHeader"; // Replace with Admin-specific header
-i//mport { AdminSidebar } from "../components/admin/AdminSidebar"; // Optional: Admin sidebar
+
 import { Outlet } from "react-router-dom";
 
 export const AdminLayout = () => {
   return (
     <div className="admin-layout">
-      <AdminHeader /> {/* Admin-specific header */}
+      <AdminHeader /> 
       
       <div className="flex">
-        <AdminSidebar /> {/* Optional: Admin sidebar for navigation */}
+    
         
         <div className="admin-content min-h-96 flex-grow p-4">
           <Outlet />

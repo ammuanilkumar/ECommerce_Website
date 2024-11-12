@@ -13,18 +13,21 @@ import { UserHome } from "../pages/userPages/UserHome";
 import { UserProfile } from "../pages/userPages/UserProfile";
 import { OrderDetails } from "../pages/userPages/OrderDetails";
 import { UserAuth } from "./protectedRoutes/UserAuth";
+import { WishlistPage } from "../pages/userPages/Wishlistpage";
+// import { WishlistPage } from "../pages/userPages/WishlistPage";
 import { AdminLoginPage } from "./../pages/adminPages/AdminLogin";
 import { AdminAuth } from "./protectedRoutes/AdminAuth";
 
 import { AdminHeader } from "../components/admin/AdminHeader";
 
-import  AdminProducts  from "../pages/adminPages/AdminProducts";
+import { AdminProducts } from "../pages/adminPages/AdminProducts";
 import AdminProfile from "../pages/adminPages/AdminProfile";
 
 import AdminCreateProduct from "../pages/adminPages/AdminCreateProduct";
 import AdminDElAndUpdate from "../pages/adminPages/AdminDElAndUpdate";
 import AdminUserOrder from "../pages/adminPages/AdminUserOrder";
 import AdminUserDetails from "../pages/adminPages/AdminUserDetails";
+import { AdminLayout } from "../layouts/AdminLayout";
 
 export const router = createBrowserRouter([
   {
@@ -86,6 +89,10 @@ export const router = createBrowserRouter([
         path: "cart",
         element: <CartPage />,
       },
+      {
+        path: "wishlist",
+        element: <WishlistPage />,
+      },
     ],
   },
   {
@@ -96,7 +103,7 @@ export const router = createBrowserRouter([
     path: "admin",
     element: (
       <AdminAuth>
-        <AdminHeader />
+        <AdminLayout />
       </AdminAuth>
     ),
     children: [
@@ -107,7 +114,7 @@ export const router = createBrowserRouter([
 
       {
         path: "profile",
-        element:<AdminProfile />,
+        element: <AdminProfile />,
       },
       {
         path: "create-product",
@@ -119,11 +126,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "user-orders",
-        element: <AdminUserOrder/>,
+        element: <AdminUserOrder />,
       },
       {
         path: "user-details",
-        element: <AdminUserDetails/>,
+        element: <AdminUserDetails />,
       },
     ],
   },
