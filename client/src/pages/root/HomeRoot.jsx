@@ -14,8 +14,8 @@ export const HomeRoot = () => {
   return (
     <div className="font-sans">
       {/* Hero Section */}
-      <section className="relative text-center bg-cover bg-center h-[400px] md:h-[600px]" style={{ backgroundImage: 'url("path_to_your_promotion_image.jpg")' }}>
-        <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center">
+      <section className="relative text-center bg-cover bg-center h-[400px] md:h-[600px]" style={{ backgroundImage: 'url("public/images/blue_homeroot_image.jpg")' }}>
+        <div className="">
           <h1 className="text-3xl md:text-5xl font-bold text-white">Discover the New Collection</h1>
           <p className="text-lg md:text-xl text-gray-200 mt-2">Elegance, Style, and Comfort</p>
           <button className="mt-4 px-6 py-2 bg-pink-500 text-white rounded-md hover:bg-pink-600">Shop Now</button>

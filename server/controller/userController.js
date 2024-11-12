@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 import { User } from "../models/userModel.js";
-
+import { Session } from "../models/sectionModel.js";
 import { generateUserToken } from "../utils/generateToken.js";
 import { syncIndexes } from "mongoose";
 
@@ -89,7 +89,7 @@ export const userLogin = async (req, res) => {
     res.cookie("token", token, {
       sameSite: "None",
       secure: true,
-      httpOnly: true, 
+      httpOnly: true,
     });
     res.status(201).json({ success: true, message: "User Login successfully" });
   } catch (error) {
@@ -127,8 +127,6 @@ export const userProfile = async (req, res, next) => {
 
 // }
 
-
-
 export const checkUser = async (req, res) => {
   try {
     const user = req.user;
@@ -137,10 +135,7 @@ export const checkUser = async (req, res) => {
       return res
         .status(401)
         .json({ success: false, message: "User not authenticated" });
-        
-
     }
-   
 
     res.json({ success: true, message: "User authenticated" });
   } catch (error) {
@@ -152,11 +147,11 @@ export const checkUser = async (req, res) => {
 export const userLogout = async (req, res) => {
   try {
     //console.log(token);
-    res.clearCookie("token",{
-        path: "/",
-        sameSite: "None",
-        secure: true,
-        httpOnly: true,
+    res.clearCookie("token", {
+      path: "/",
+      sameSite: "None",
+      secure: true,
+      httpOnly: true,
     });
     res.json({ success: true, message: "user logged out" });
   } catch (error) {
@@ -165,3 +160,55 @@ export const userLogout = async (req, res) => {
   }
 };
 
+export const seasonOdearDetails = async (req, res) => {
+  try {
+    const user = req.user; // Assumes authUser middleware sets req.user
+    const userData = await User.findOne({ email: user.email });
+
+    if (!userData) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
+    }
+
+    // Fetch the user's order and populate the product details
+    const order = await Session.findOne({ user: userData._id }).populate({
+      path: "products.product", // Populate the product details
+      select: "image title price", // Select only the required fields
+    });
+
+    if (!order) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Order not found" });
+    }
+
+    // Calculate total price
+    const totalPrice = order.products.reduce((total, item) => {
+      return total + item.product.price * item.quantity;
+    }, 0);
+
+    // Format the response to include product details and total price
+    const response = {
+      sessionId: order.sessionId,
+      products: order.products.map((item) => ({
+        img: item.product.image,
+        title: item.product.title,
+        price: item.product.price,
+        quantity: item.quantity,
+        totalProductPrice: item.product.price * item.quantity,
+      })),
+      totalPrice: totalPrice,
+      currency: order.currency,
+      payment_status: order.payment_status,
+    };
+
+    // Return the order details
+    res.status(200).json(response);
+  } catch (error) {
+    console.error("Error fetching order:", error);
+    res
+      .status(500)
+      .json({ success: false, message: "Internal server error!!!" });
+  }
+};

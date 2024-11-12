@@ -3,6 +3,8 @@ import { Admin } from "../models/adminModel.js";
 import { generateAdminToken } from "../utils/generateAdminToken.js";
 import { Product } from "../models/productModel.js";
 import { User } from "../models/userModel.js";
+import {Session} from "../models/sectionModel.js"
+
 
 export const adminCreate = async (req, res) => {
   try {
@@ -261,8 +263,6 @@ export const deleteUser = async (req, res) => {
     const { id } = req.params;
     const admin = req.admin;
 
-  
-
     const user = await User.findById(id);
     if (!user) {
       return res.status(404).json({
@@ -354,19 +354,30 @@ export const getAllUserOrders = async (req, res) => {
         // Map over orders to format them
         const formattedOrders = orders.map((order) => {
           const totalPrice = order.products.reduce((total, item) => {
-            return total + item.product.price * item.quantity;
+            // Check if the product exists before accessing its properties
+            if (item.product) {
+              return total + item.product.price * item.quantity;
+            }
+            return total;
           }, 0);
 
           return {
             sessionId: order.sessionId,
-            products: order.products.map((item) => ({
-              img: item.product.image,
-              title: item.product.title,
-              price: item.product.price,
-              quantity: item.quantity,
-              status: item.status, // Individual product status
-              totalProductPrice: item.product.price * item.quantity,
-            })),
+            products: order.products
+              .map((item) => {
+                if (item.product) {
+                  return {
+                    img: item.product.image,
+                    title: item.product.title,
+                    price: item.product.price,
+                    quantity: item.quantity,
+                    status: item.status, // Individual product status
+                    totalProductPrice: item.product.price * item.quantity,
+                  };
+                }
+                return null; // Return null if product is missing
+              })
+              .filter((p) => p !== null), // Filter out any null products
             totalPrice: totalPrice,
             currency: order.currency,
             payment_status: order.payment_status,
@@ -399,3 +410,4 @@ export const getAllUserOrders = async (req, res) => {
     return res.status(500).json({ success: false, message: "Server error" });
   }
 };
+
