@@ -47,6 +47,24 @@ export const userCheck = async () => {
   }
 };
 
+
+export const userSignup = async (userData) => {
+  try {
+    const response = await axiosInstance({
+      url: "/user/create",
+      method: "POST",
+      data: userData, // Include the userData in the request body
+      withCredentials: true,
+    });
+
+   
+    return response.data; 
+  } catch (error) {
+    console.error('Error during user signup:', error.response ? error.response.data : error.message);
+    throw error; 
+  }
+};
+
 // export const fetchUserProfile = async () => {
 //   try {
 //     const response = await axiosInstance({
