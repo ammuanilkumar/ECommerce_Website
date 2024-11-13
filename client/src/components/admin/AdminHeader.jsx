@@ -25,19 +25,19 @@ export const AdminHeader = () => {
           to="/admin/delete-and-update"
           className="hover:text-gray-200 transition-colors duration-300"
         >
-         delete-and-update
+         Delete-and-Update
         </Link>
         <Link
           to="/admin/user-orders"
           className="hover:text-gray-200 transition-colors duration-300"
         >
-        user order
+        User Order
         </Link>
         <Link
           to="/admin/user-details"
           className="hover:text-gray-200 transition-colors duration-300"
         >
-       uswr details
+       User Details
         </Link>
       </nav>
 
