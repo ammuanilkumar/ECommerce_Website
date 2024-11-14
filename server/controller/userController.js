@@ -3,51 +3,55 @@ import { User } from "../models/userModel.js";
 import { Session } from "../models/sectionModel.js";
 import { generateUserToken } from "../utils/generateToken.js";
 import { syncIndexes } from "mongoose";
+import { cloudinaryInstance } from "../config/cloundinaryConfig.js";
 
 export const userCreate = async (req, res) => {
   try {
-    console.log(req.body);
+    const { name, email, password, confirmPassword, phone, profile, product } =
+      req.body;
 
-    const {
-      name,
-      email,
-      password,
-      phone,
-      profile,
-      wishlist,
-      product,
-      address,
-    } = req.body;
-    if (!name || !email || !password || !phone) {
+    // Check if all required fields are present
+    if (!name || !email || !password || !confirmPassword || !phone) {
       return res
         .status(400)
-        .json({ success: false, message: "all fields required" });
+        .json({ success: false, message: "All fields are required" });
     }
 
-    const userExists = await User.findOne({ email: email });
+    // Check if passwords match
+    if (password !== confirmPassword) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Passwords do not match" });
+    }
+
+    // Check if the user already exists
+    const userExists = await User.findOne({ email });
     if (userExists) {
       return res
-        .status(404)
-        .json({ success: false, message: "User allredy exist" });
+        .status(400)
+        .json({ success: false, message: "User already exists" });
     }
 
+    // Hash the password
     const saltRounds = 10;
     const hashedPassword = bcrypt.hashSync(password, saltRounds);
 
+    // Create the new user with or without the profile picture
     const newUser = new User({
       name,
       email,
       password: hashedPassword,
       phone,
-      profile,
-      wishlist,
+      profile:
+        "https://www.pngitem.com/pimgs/m/30-307416_profile-icon-png-image-free-download-searchpng-employee.png",
       product,
-      address,
     });
+
+    // Save the user to the database
     await newUser.save();
 
+    // Generate and send token
     const token = generateUserToken(email);
-
     res.cookie("token", token, {
       sameSite: "None",
       secure: true,
@@ -55,8 +59,8 @@ export const userCreate = async (req, res) => {
     });
     res.json({ success: true, message: "User created successfully" });
   } catch (error) {
+    res.status(500).json({ message: "Internal server error" });
     console.error(error);
-    res.status(500).json({ message: " Internal server error" });
   }
 };
 

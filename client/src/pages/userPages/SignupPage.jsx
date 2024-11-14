@@ -78,26 +78,26 @@ export const SignupPage = () => {
               )}
             </div>
 
-            {/* Mobile Number Field */}
+            {/* phone Number Field */}
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Mobile Number</span>
+                <span className="label-text">phone Number</span>
               </label>
               <input
                 type="tel"
-                placeholder="Enter your mobile number"
+                placeholder="Enter your phone number"
                 className="input input-bordered"
-                {...register("mobile", {
-                  required: "Mobile number is required",
+                {...register("phone", {
+                  required: "phone number is required",
                   pattern: {
                     value: /^[0-9]{10}$/,
-                    message: "Please enter a valid 10-digit mobile number",
+                    message: "Please enter a valid 10-digit phone number",
                   },
                 })}
               />
-              {errors.mobile && (
+              {errors.phone && (
                 <p className="text-red-500 text-sm mt-2">
-                  {errors.mobile.message}
+                  {errors.phone.message}
                 </p>
               )}
             </div>
