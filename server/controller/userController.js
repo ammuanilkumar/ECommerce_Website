@@ -170,31 +170,27 @@ export const seasonOdearDetails = async (req, res) => {
     const userData = await User.findOne({ email: user.email });
 
     if (!userData) {
-      return res
-        .status(404)
-        .json({ success: false, message: "User not found" });
+      return res.status(404).json({ success: false, message: "User not found" });
     }
 
-    // Fetch the user's order and populate the product details
     const order = await Session.findOne({ user: userData._id }).populate({
-      path: "products.product", // Populate the product details
-      select: "image title price", // Select only the required fields
+      path: "products.product",
+      select: "image title price",
     });
 
     if (!order) {
-      return res
-        .status(404)
-        .json({ success: false, message: "Order not found" });
+      return res.status(404).json({ success: false, message: "Order not found" });
     }
 
-    // Calculate total price
     const totalPrice = order.products.reduce((total, item) => {
       return total + item.product.price * item.quantity;
     }, 0);
 
-    // Format the response to include product details and total price
     const response = {
       sessionId: order.sessionId,
+      id: order._id, // Add an ID field to match frontend expectations
+      date: order.createdAt, // Add a date field
+      status: order.payment_status,
       products: order.products.map((item) => ({
         img: item.product.image,
         title: item.product.title,
@@ -207,12 +203,34 @@ export const seasonOdearDetails = async (req, res) => {
       payment_status: order.payment_status,
     };
 
-    // Return the order details
     res.status(200).json(response);
   } catch (error) {
     console.error("Error fetching order:", error);
-    res
-      .status(500)
-      .json({ success: false, message: "Internal server error!!!" });
+    res.status(500).json({ success: false, message: "Internal server error" });
   }
 };
+
+export const updateUserProfile = async (req,res)=>{
+  try {
+    const { id } = req.params; // Get user ID from params
+    const { name, email, phone, profile } = req.body; // Get fields to update from the request body
+
+    // Find the user by ID and update the profile fields
+    const updatedUser = await User.findByIdAndUpdate(
+      id, 
+      { name, email, phone, profile }, // Fields to update
+      { new: true } // Return the updated user document
+    );
+
+    // If the user is not found
+    if (!updatedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Return the updated user
+    return res.status(200).json({ message: "Profile updated successfully", updatedUser });
+  } catch (error) {
+    console.error("Error updating user profile:", error);
+    return res.status(500).json({ message: "Server error, unable to update profile" });
+  }
+}

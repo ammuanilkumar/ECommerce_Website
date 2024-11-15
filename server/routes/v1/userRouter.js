@@ -6,6 +6,7 @@ import {
   checkUser,
   userLogout,
   seasonOdearDetails,
+  updateUserProfile,
 } from "../../controller/userController.js";
 import { authUser } from "../../middlewares/authUser.js";
 //import {authMiddleware} from "../../middlewares/authMiddleware.js";
@@ -18,6 +19,7 @@ router.get("/profile", authUser, userProfile);
 router.post("/logout", userLogout);
 router.get("/check-user", authUser, checkUser);
 //router.put("/update",authMiddleware, updateUserProfile);
-router.get("/odear/:id",authUser, seasonOdearDetails);
+router.get("/order/:id", authUser, seasonOdearDetails);
+router.post("/profile-update/:id",authUser, updateUserProfile)
 
 export default router;

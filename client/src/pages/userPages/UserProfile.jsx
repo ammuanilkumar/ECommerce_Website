@@ -88,7 +88,10 @@ export const UserProfile = () => {
             </div>
           </div>
           <div className="flex space-x-4">
+            <Link to={"/user/profile-update"}>
             <button className="btn btn-primary">Edit Profile</button>
+            </Link>
+           
             <Link to={"/user/orderdetails"} className="w-full">
               <button className="btn btn-outline btn-secondary">
                 Order Details
