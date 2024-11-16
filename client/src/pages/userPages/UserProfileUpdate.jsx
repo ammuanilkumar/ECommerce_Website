@@ -1,74 +1,65 @@
 import React, { useState, useEffect } from "react";
-import { useHistory, useParams } from "react-router-dom";
-import { axiosInstance } from "../../config/axiosInstance"; // Ensure axiosInstance is correctly set up
+import { useNavigate, useParams } from "react-router-dom";
+import { axiosInstance } from "../../config/axiosInstance";
 
 const UserProfileUpdate = () => {
-  const { id } = useParams(); // Get the user ID from URL parameters
+  const { id } = useParams(); // Get user ID from the URL
+  const navigate = useNavigate(); // Hook for navigation
+
   const [user, setUser] = useState({
     name: "",
     email: "",
     phone: "",
     profile: "", // URL or path to profile image
   });
+  const [error, setError] = useState(""); // For error messages
+  const [loading, setLoading] = useState(false); // Loading state for the submit button
 
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
-  const history = useHistory();
-
-  // Fetch the user's current profile data on mount
+  // Fetch the user's current profile data
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const response = await axiosInstance.get(`/user/profile-update/${id}`, {
-          withCredentials: true, // Ensure cookies are sent with the request if needed
+          withCredentials: true,
         });
-        setUser(response.data); // Set the fetched user data into state
+        setUser(response.data); // Set the user data
       } catch (err) {
         console.error("Error fetching user data:", err);
-        setError("Failed to fetch user data"); // Set error message in case of failure
+        setError("Failed to fetch user data");
       }
     };
-    fetchUserData();
-  }, [id]); // Dependency array ensures the effect runs when the `id` changes
 
-  // Handle form field changes and update the state
+    fetchUserData();
+  }, [id]);
+
+  // Handle form input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setUser((prevUser) => ({ ...prevUser, [name]: value })); // Dynamically update the respective field
+    setUser((prevUser) => ({ ...prevUser, [name]: value })); // Update user state dynamically
   };
 
-  // Handle form submission with POST method to update user data
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true); // Set loading to true while the request is being processed
+    setLoading(true); // Set loading to true during the update process
     try {
-      // Sending the POST request to update user data
-      const response = await axiosInstance.post(
-        `/user/profile-update/${id}`,
-        user,
-        {
-          withCredentials: true, // Include credentials if needed
-        }
-      );
-      setLoading(false); // Reset loading state after the request
-      alert("Profile updated successfully"); // Show success alert
-      history.push(`/profile/${id}`); // Redirect to the updated profile page
+      await axiosInstance.post(`/user/profile-update/${id}`, user, {
+        withCredentials: true,
+      });
+      setLoading(false);
+      alert("Profile updated successfully");
+      navigate(`/profile/${id}`); // Redirect to the updated profile page
     } catch (err) {
-      setLoading(false); // Reset loading state in case of error
-      setError("Error updating profile, please try again."); // Display error message
+      setLoading(false);
+      console.error("Error updating profile:", err);
+      setError("Error updating profile, please try again.");
     }
   };
 
   return (
     <div className="max-w-lg mx-auto p-6 bg-white rounded-lg shadow-md">
-      {/* Displaying your minimal content */}
-      <h1 className="text-2xl font-bold text-center mb-4">Haloo</h1>{" "}
-      {/* This is your simple heading */}
       <h2 className="text-2xl font-bold text-center mb-4">Update Profile</h2>
-      {error && (
-        <div className="text-red-500 text-center mb-4">{error}</div>
-      )}{" "}
-      {/* Display error message */}
+      {error && <div className="text-red-500 text-center mb-4">{error}</div>}
       <form onSubmit={handleSubmit}>
         {/* Name Input */}
         <div className="mb-4">
@@ -142,8 +133,7 @@ const UserProfileUpdate = () => {
             }`}
             disabled={loading}
           >
-            {loading ? "Updating..." : "Update Profile"}{" "}
-            {/* Change button text during loading */}
+            {loading ? "Updating..." : "Update Profile"}
           </button>
         </div>
       </form>
