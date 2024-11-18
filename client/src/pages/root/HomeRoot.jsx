@@ -25,7 +25,14 @@ export const HomeRoot = () => {
             <img src="/images/image_summer_collection.jpg" alt="Summer Collection" className="w-full h-48 object-cover rounded-lg group-hover:scale-105 transition-transform" />
             <p className="absolute inset-x-0 bottom-2 text-center text-white text-lg font-semibold bg-black bg-opacity-50 py-1">Summer Collection</p>
           </div>
-          {/* Add more categories as needed */}
+          <div className="relative group">
+            <img src="/images/product_3.jpg" alt="Casual Wear" className="w-full h-48 object-cover rounded-lg group-hover:scale-105 transition-transform" />
+            <p className="absolute inset-x-0 bottom-2 text-center text-white text-lg font-semibold bg-black bg-opacity-50 py-1">Casual Wear</p>
+          </div>
+          <div className="relative group">
+            <img src="/images/winter_collection.jpg" alt="Winter Collection" className="w-full h-48 object-cover rounded-lg group-hover:scale-105 transition-transform" />
+            <p className="absolute inset-x-0 bottom-2 text-center text-white text-lg font-semibold bg-black bg-opacity-50 py-1">Winter Collection</p>
+          </div>
           </div>
       </section>
 
@@ -41,7 +48,14 @@ export const HomeRoot = () => {
             <img src="/images/dress_2.jpg" alt="Product 2" className="w-full h-64 object-cover rounded-lg group-hover:scale-105 transition-transform" />
             <p className="mt-2 text-center text-lg font-semibold">Elegant Dress </p>
           </div>
-          {/* Add more products as needed */}
+          <div className="relative group">
+            <img src="/images/chic_dress.jpg" alt="chic Dress" className="w-full h-64 object-cover rounded-lg group-hover:scale-105 transition-transform" />
+            <p className="mt-2 text-center text-lg font-semibold">Chic Dress</p>
+          </div>
+          <div className="relative group">
+            <img src="/images/classic_dress_2.jpg" alt=" Classic Dress" className="w-full h-64 object-cover rounded-lg group-hover:scale-105 transition-transform" />
+            <p className="mt-2 text-center text-lg font-semibold">Classic Dress</p>
+          </div>
         </div>
       </section>
     </div>
