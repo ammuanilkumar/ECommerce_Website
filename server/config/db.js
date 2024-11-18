@@ -1,42 +1,9 @@
-// import mongoose from 'mongoose';
 
-
-//  export const connectDB= async() => {
-
-//     try {
-//         await mongoose.connect(process.env.MONGO_URI),{
-//             useNewUrlParser: true,
-//             useUnifiedTopology: true,
-//             serverSelectionTimeoutMS: 4500,
-
-            
-//         }
-//         console.log('DB connected successfully')
-
-//     } catch (error) {
-//         console.log(error);
-        
-//     }
-    
-// }
-// import mongoose from 'mongoose';
-
-// export const connectDB = async () => {
-//     try {
-//         await mongoose.connect(process.env.MONGO_URI, {
-//             useNewUrlParser: true,
-//             useUnifiedTopology: true,
-//             serverSelectionTimeoutMS: 4500,
-//         });
-//         console.log('DB connected successfully');
-//     } catch (error) {
-//         console.log('Error connecting to DB:', error);
-//     }
-// };
 
 import mongoose from 'mongoose';
 
 export const connectDB = async () => {
+    //  const url = 'mongodb+srv://ammupa41:4pqwEdbliyL7Zry2@cluster0.zkwdf.mongodb.net/Ecommerce_website2'
     try {
         await mongoose.connect(process.env.MONGO_URI, {
             serverSelectionTimeoutMS: 4500,   
