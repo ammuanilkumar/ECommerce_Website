@@ -29,12 +29,12 @@ const Header = () => {
         >
           Product
         </Link>
-        <Link
+        {/* <Link
           to={"/user/offers"}
           className="hover:text-gray-200 transition-colors duration-300"
         >
           OFFERS
-        </Link>
+        </Link> */}
       </nav>
     
 

@@ -20,6 +20,6 @@ router.post("/logout", userLogout);
 router.get("/check-user", authUser, checkUser);
 //router.put("/update",authMiddleware, updateUserProfile);
 router.get("/order/:id", authUser, seasonOdearDetails);
-router.post("/profile-update/:id",authUser, updateUserProfile)
+router.post("/profile-update/:id", authUser, updateUserProfile);
 
 export default router;

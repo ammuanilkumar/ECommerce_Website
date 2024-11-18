@@ -30,7 +30,7 @@ import AdminUserDetails from "../pages/adminPages/AdminUserDetails";
 import { AdminLayout } from "../layouts/AdminLayout";
 import { SuccessPage } from "../pages/userPages/SuccessPage";
 import { CancelPage } from "../pages/userPages/CancelPage";
-import UserProfileUpdate from "../pages/userPages/UserProfileUpdate";
+import UpdateProfileForm from "../pages/userPages/UserProfileUpdate";
 
 export const router = createBrowserRouter([
   {
@@ -100,7 +100,7 @@ export const router = createBrowserRouter([
       {
         path: "profile-update",
 
-        element: <UserProfileUpdate/>,
+        element: <UpdateProfileForm/>,
       },
 
       {

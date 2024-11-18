@@ -170,7 +170,9 @@ export const seasonOdearDetails = async (req, res) => {
     const userData = await User.findOne({ email: user.email });
 
     if (!userData) {
-      return res.status(404).json({ success: false, message: "User not found" });
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
     }
 
     const order = await Session.findOne({ user: userData._id }).populate({
@@ -179,7 +181,9 @@ export const seasonOdearDetails = async (req, res) => {
     });
 
     if (!order) {
-      return res.status(404).json({ success: false, message: "Order not found" });
+      return res
+        .status(404)
+        .json({ success: false, message: "Order not found" });
     }
 
     const totalPrice = order.products.reduce((total, item) => {
@@ -210,15 +214,16 @@ export const seasonOdearDetails = async (req, res) => {
   }
 };
 
-export const updateUserProfile = async (req,res)=>{
+// In your backend route handler (assuming you're using Express.js)
+export const updateUserProfile = async (req, res) => {
   try {
     const { id } = req.params; // Get user ID from params
-    const { name, email, phone, profile } = req.body; // Get fields to update from the request body
+    const { name, email, phone } = req.body; // Get fields to update from the request body
 
     // Find the user by ID and update the profile fields
     const updatedUser = await User.findByIdAndUpdate(
-      id, 
-      { name, email, phone, profile }, // Fields to update
+      id,
+      { name, email, phone }, // Fields to update
       { new: true } // Return the updated user document
     );
 
@@ -233,4 +238,4 @@ export const updateUserProfile = async (req,res)=>{
     console.error("Error updating user profile:", error);
     return res.status(500).json({ message: "Server error, unable to update profile" });
   }
-}
+};

@@ -124,70 +124,16 @@ export const UserProfile = () => {
           </div>
         </div>
 
-        {/* Order History */}
-        <div className="mb-8">
-          <h3 className="text-xl font-semibold mb-4">Order History</h3>
-          <div className="overflow-x-auto">
-            <table className="table w-full">
-              <thead>
-                <tr>
-                  <th>Order ID</th>
-                  <th>Date</th>
-                  <th>Status</th>
-                  <th>Total</th>
-                  <th>Details</th> {/* New column for order details */}
-                </tr>
-              </thead>
-              <tbody>
-                {/* Example order rows */}
-                <tr>
-                  <td>#123456</td>
-                  <td>October 10, 2024</td>
-                  <td><span className="badge badge-success">Delivered</span></td>
-                  <td>$49.99</td>
-                  <td>
-                    <button className="btn btn-outline btn-primary btn-sm">
-                      View Details
-                    </button> {/* View Order Details Button */}
-                  </td>
-                </tr>
-                <tr>
-                  <td>#123457</td>
-                  <td>October 5, 2024</td>
-                  <td><span className="badge badge-warning">Processing</span></td>
-                  <td>$89.99</td>
-                  <td>
-                    <button className="btn btn-outline btn-primary btn-sm">
-                      View Details
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>#123458</td>
-                  <td>September 30, 2024</td>
-                  <td><span className="badge badge-error">Cancelled</span></td>
-                  <td>$24.99</td>
-                  <td>
-                    <Link to="/user/orderdetails" className="w-full">
-                      <button className="btn btn-outline btn-primary btn-sm">
-                        View Details
-                      </button>
-                    </Link>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        {/* Account Settings */}
+       
+{/* 
+        Account Settings
         <div className="mt-8">
           <h3 className="text-xl font-semibold mb-4">Account Settings</h3>
           <div className="flex space-x-4">
             <button className="btn btn-error">Delete Account</button>
             <button className="btn btn-outline btn-secondary">Change Password</button>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );
