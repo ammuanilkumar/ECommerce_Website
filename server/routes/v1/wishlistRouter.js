@@ -9,15 +9,6 @@ const router = express.Router();
 
 router.post('/add/:id', authUser, addToWishlist);
 
-
-
-
-
-
-
-
-
-
 router.get('/get', authUser, getWishlist);
 router.delete('/remove/:id', authUser, removeFromWishlist);
 

@@ -65,31 +65,3 @@ export const userSignup = async (userData) => {
   }
 };
 
-// export const fetchUserProfile = async () => {
-//   try {
-//     const response = await axiosInstance({
-//       url: "/user/profile",
-//       method: "GET",
-//       withCredentials: true,
-//     });
-//     setUser(response?.data?.data);
-//   } catch (error) {
-//     console.log(error);
-//     toast.error("error fetching data  from server");
-//   }
-// };
-
-
-
-// export const userCheck = async () => {
-//     try {
-//         const response = await axios({
-//           url: "http://localhost:4500/api/v1/user/check-user",
-//           method: "GET",
-//           withCredentials: true,
-//         });
-//         return response?.data;
-//       } catch (error) {
-//         console.log(error);
-//       }
-// };
