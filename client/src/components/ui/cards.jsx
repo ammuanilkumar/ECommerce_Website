@@ -41,9 +41,9 @@ export const AdminProductCards = ({ product }) => {
         </p>
         <div className="card-actions mt-auto w-full">
           <Link to={`/admin/product-details/${product._id}`}>
-            <button className="w-full bg-green-600 text-white rounded-lg py-2 px-4 text-lg font-semibold hover:bg-green-700 transition-colors duration-300">
+            {/* <button className="w-full bg-green-600 text-white rounded-lg py-2 px-4 text-lg font-semibold hover:bg-green-700 transition-colors duration-300">
               More Details
-            </button>
+            </button> */}
           </Link>
         </div>
       </div>

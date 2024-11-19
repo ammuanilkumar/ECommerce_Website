@@ -3,8 +3,7 @@ import { Admin } from "../models/adminModel.js";
 import { generateAdminToken } from "../utils/generateAdminToken.js";
 import { Product } from "../models/productModel.js";
 import { User } from "../models/userModel.js";
-import {Session} from "../models/sectionModel.js"
-
+import { Session } from "../models/sectionModel.js";
 
 export const adminCreate = async (req, res) => {
   try {
@@ -81,6 +80,7 @@ export const adminLogin = async (req, res) => {
       .json({ success: false, message: "Internal server error !!" });
   }
 };
+
 export const adminProfile = async (req, res) => {
   try {
     // const {id} = req.id
@@ -410,4 +410,3 @@ export const getAllUserOrders = async (req, res) => {
     return res.status(500).json({ success: false, message: "Server error" });
   }
 };
-
