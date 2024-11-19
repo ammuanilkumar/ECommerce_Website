@@ -2,7 +2,7 @@ import React from "react";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import axiosInstance from "../../config/axiosInstance"; 
+import { axiosInstance } from "../../config/axiosInstance";
 
 export const AdminLoginPage = () => {
   const {
