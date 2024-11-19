@@ -50,34 +50,42 @@ export const adminCreate = async (req, res) => {
 export const adminLogin = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const adminExists = await Admin.findOne({ email });
 
+    // Check if admin exists
+    const adminExists = await Admin.findOne({ email });
     if (!adminExists) {
       return res
         .status(400)
         .json({ success: false, message: "Admin not found" });
     }
 
-    const passwordMatch = bcrypt.compareSync(password, adminExists.password);
+    // Compare password (async for better performance)
+    const passwordMatch = await bcrypt.compare(password, adminExists.password);
     if (!passwordMatch) {
       return res
         .status(400)
-        .json({ success: false, message: "Admin not authenticated" });
+        .json({ success: false, message: "Invalid credentials" });
     }
 
-    const token = generateAdminToken(adminExists.email);
+    // Generate token
+    const token = generateAdminToken(adminExists.email); // Ensure your token contains necessary claims
 
+    // Set cookie
     res.cookie("token", token, {
-      sameSite: "None",
-      secure: true,
-      httpOnly: true,
+      sameSite: "None", // Required for cross-site cookies
+      secure: true,    // Requires HTTPS
+      httpOnly: true,  // Protect against XSS
     });
-    res.status(200).json({ success: true, message: "Admin login successful" });
+
+    // Respond to client
+    res
+      .status(200)
+      .json({ success: true, message: "Admin login successful", token });
   } catch (error) {
-    console.error(error);
+    console.error("Error during admin login:", error);
     res
       .status(500)
-      .json({ success: false, message: "Internal server error !!" });
+      .json({ success: false, message: "Internal server error" });
   }
 };
 
