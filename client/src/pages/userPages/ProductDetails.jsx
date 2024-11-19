@@ -12,6 +12,8 @@ export const ProductDetails = () => {
 
   const { id } = useParams(); // productId from URL
 
+  console.log("productDetails===>", productDetails)
+
   // Fetch product details on component mount
   useEffect(() => {
     const fetchProductDetails = async () => {

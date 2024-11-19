@@ -4,6 +4,7 @@ import { Session } from "../models/sectionModel.js";
 import { generateUserToken } from "../utils/generateToken.js";
 import { syncIndexes } from "mongoose";
 import { cloudinaryInstance } from "../config/cloundinaryConfig.js";
+import mongoose from "mongoose";
 
 export const userCreate = async (req, res) => {
   try {
@@ -105,8 +106,10 @@ export const userLogin = async (req, res) => {
 export const userProfile = async (req, res, next) => {
   try {
     const user = req.user;
-    // const id = req.id//
-    const useData = await User.findOne({ email: user.email }).select(
+
+    const userData = await User.findOne({ email: user.email });
+
+    const useData = await User.findOne({ _id: userData._id }).select(
       "-password"
     );
     // const useData = await User.findById(id).select("-password");
@@ -217,25 +220,34 @@ export const seasonOdearDetails = async (req, res) => {
 // In your backend route handler (assuming you're using Express.js)
 export const updateUserProfile = async (req, res) => {
   try {
-    const { id } = req.params; // Get user ID from params
-    const { name, email, phone } = req.body; // Get fields to update from the request body
+    const { name, phone } = req.body; // Get updated fields from the request body
+    const user = req.user; // Assuming `req.user` contains the authenticated user's details
+    console.log("User===>", user);
 
-    // Find the user by ID and update the profile fields
-    const updatedUser = await User.findByIdAndUpdate(
-      id,
-      { name, email, phone }, // Fields to update
-      { new: true } // Return the updated user document
-    );
+    // Find the user in the database by email
+    const userData = await User.findOne({ email: user.email });
+    console.log("userData===>", userData);
 
-    // If the user is not found
-    if (!updatedUser) {
+    // Check if the user exists
+    if (!userData) {
       return res.status(404).json({ message: "User not found" });
     }
 
+    // Find the user by ID and update their profile
+    const updatedUser = await User.findByIdAndUpdate(
+      userData._id, // Pass the user's `_id` here
+      { name, phone }, // Fields to update
+      { new: true } // Return the updated document
+    );
+
     // Return the updated user
-    return res.status(200).json({ message: "Profile updated successfully", updatedUser });
+    return res
+      .status(200)
+      .json({ message: "Profile updated successfully", updatedUser });
   } catch (error) {
     console.error("Error updating user profile:", error);
-    return res.status(500).json({ message: "Server error, unable to update profile" });
+    return res
+      .status(500)
+      .json({ message: "Server error, unable to update profile" });
   }
 };

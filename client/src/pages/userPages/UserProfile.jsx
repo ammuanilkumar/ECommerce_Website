@@ -27,27 +27,27 @@ export const UserProfile = () => {
   };
 
   // Fetch order details based on order ID
-  const fetchOrderDetails = async () => {
-    try {
-      const response = await axiosInstance({
-        url: `/user/order/${id}`, // Ensure you have the correct URL for fetching order details
-        method: "GET",
-        withCredentials: true,
+  // const fetchOrderDetails = async () => {
+  //   try {
+  //     const response = await axiosInstance({
+  //       url: `/user/order/${id}`, // Ensure you have the correct URL for fetching order details
+  //       method: "GET",
+  //       withCredentials: true,
 
-      });
-      console.log(response)
-      if (response?.data) {
-        setOrderDetails(response.data);
-      } else {
-        setError("Order details not found");
-      }
-    } catch (error) {
-      console.error("Error fetching order details:", error);
-      setError("No order details available");
-    } finally {
-      setLoading(false);
-    }
-  };
+  //     });
+  //     console.log(response)
+  //     if (response?.data) {
+  //       setOrderDetails(response.data);
+  //     } else {
+  //       setError("Order details not found");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error fetching order details:", error);
+  //     setError("No order details available");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   // Handle logout
   const handleLogout = async () => {
@@ -65,7 +65,7 @@ export const UserProfile = () => {
 
   useEffect(() => {
     fetchUserProfile();
-    fetchOrderDetails();
+    // fetchOrderDetails();
   
   }, [id]);
 
@@ -109,7 +109,7 @@ export const UserProfile = () => {
             <h3 className="text-lg font-semibold mb-4">Personal Information</h3>
             <h2 className="text-center text-1xl font-bold text-gray-900 mb-4 capitalize">Name: {user.name}</h2>
             <p><span className="font-medium text-gray-900">Email:</span> {user.email}</p>
-            <p><strong>Phone:</strong> +91</p>
+            <p><strong>Phone:</strong> +91 {user.phone}</p>
             <p><strong>Address:</strong> 1234 Erkm Street</p>
           </div>
           <div className="bg-gray-50 p-6 rounded-lg shadow-inner">
@@ -120,7 +120,7 @@ export const UserProfile = () => {
           <div className="bg-gray-50 p-6 rounded-lg shadow-inner">
             <h3 className="text-lg font-semibold mb-4">Payment Methods</h3>
             <p><strong>Credit Card:</strong> **** **** **** 1234</p>
-            <p><strong>PayPal:</strong> jithu1234@paypal.com</p>
+            <p><strong>PayPal:</strong> {user.name}@paypal.com</p>
           </div>
         </div>
 
