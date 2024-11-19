@@ -22,7 +22,7 @@ const router = express.Router();
 
 router.post("/create", adminCreate);
 router.post("/login", adminLogin);
-router.get("/profile/:id", authAdmin, adminProfile);
+router.get("/profile", authAdmin, adminProfile);
 router.post("/logout", adminLogout);
 router.get("/check-admin", authAdmin, checkAdmin);
 router.get("/getAllProducts", authAdmin, getAllProducts);
