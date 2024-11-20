@@ -88,11 +88,11 @@ export const CrudProductCards = ({ product, onDelete }) => {
             </button>
           </Link> */}
           
-          <Link to={`/admin/dashboard/update-product/${product._id}`}>
+          {/* <Link to={`/admin/dashboard/update-product/${product._id}`}>
             <button className="flex-1 bg-yellow-500 text-white rounded-lg py-2 px-4 text-lg font-semibold hover:bg-yellow-600 transition-colors duration-300">
               Update Product
             </button>
-          </Link>
+          </Link> */}
 
           <button
             className="flex-1 bg-red-600 text-white rounded-lg py-2 px-4 text-lg font-semibold hover:bg-red-700 transition-colors duration-300"
