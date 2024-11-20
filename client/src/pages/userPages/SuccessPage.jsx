@@ -1,10 +1,7 @@
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { axiosInstance } from "../../config/axiosInstance";
 
 export const SuccessPage = () => {
-  const navigate = useNavigate();
-
   const handleRemoveProduct = async () => {
     try {
       const response = await axiosInstance({
@@ -25,14 +22,14 @@ export const SuccessPage = () => {
     const removeAndRedirect = async () => {
       await handleRemoveProduct(); // First remove all products from cart
       const timer = setTimeout(() => {
-        navigate("/user/home"); // Then redirect to the home page after 5 seconds
+        window.location.href = "https://ecommerce-website-server-n0iv.onrender.com/user/home"; // Redirect to live server
       }, 5000);
 
       return () => clearTimeout(timer); // Clean up the timer
     };
 
     removeAndRedirect(); // Invoke the function inside useEffect
-  }, [navigate]);
+  }, []);
 
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-green-100">
