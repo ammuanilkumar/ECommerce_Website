@@ -59,7 +59,6 @@ export const adminLogin = async (req, res) => {
         .json({ success: false, message: "Admin not found" });
     }
 
-    // Compare password (async for better performance)
     const passwordMatch = await bcrypt.compare(password, adminExists.password);
     if (!passwordMatch) {
       return res
@@ -68,13 +67,13 @@ export const adminLogin = async (req, res) => {
     }
 
     // Generate token
-    const token = generateAdminToken(adminExists.email); // Ensure your token contains necessary claims
+    const token = generateAdminToken(adminExists.email); 
 
     // Set cookie
     res.cookie("token", token, {
       sameSite: "None", // Required for cross-site cookies
-      secure: true,    // Requires HTTPS
-      httpOnly: true,  // Protect against XSS
+      secure: true,    // HTTPS
+      httpOnly: true,  
     });
 
     // Respond to client
@@ -395,7 +394,7 @@ export const getAllUserOrders = async (req, res) => {
               id: user._id,
               name: user.name,
               email: user.email,
-              // Add more fields if needed
+          
             },
           };
         });
