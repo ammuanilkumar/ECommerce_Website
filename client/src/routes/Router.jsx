@@ -28,9 +28,10 @@ import AdminDElAndUpdate from "../pages/adminPages/AdminDElAndUpdate";
 import AdminUserOrder from "../pages/adminPages/AdminUserOrder";
 import AdminUserDetails from "../pages/adminPages/AdminUserDetails";
 import { AdminLayout } from "../layouts/AdminLayout";
-import { SuccessPage } from "../pages/userPages/SuccessPage";
+
 import { CancelPage } from "../pages/userPages/CancelPage";
 import UpdateProfileForm from "../pages/userPages/UserProfileUpdate";
+import { SuccessPage } from "../pages/userPages/SuccessPage";
 
 export const router = createBrowserRouter([
   {
@@ -108,7 +109,7 @@ export const router = createBrowserRouter([
         children: [
           {
             path: "success",
-            element: <SuccessPage />,
+            element: <SuccessPage></SuccessPage>,
           },
           {
             path: "cancel",

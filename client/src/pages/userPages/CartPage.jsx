@@ -114,7 +114,6 @@ export const CartPage = () => {
       const response = await axiosInstance({
         url: "/payment/create-checkout-session",
         method: "POST",
-        withCredentials: true,
         data: { products: cartProduct },
       });
 
