@@ -80,8 +80,9 @@ export const WishlistPage = () => {
           data: { quantity },
         });
   
-        if (response?.data?.message === "Product added to cart successfully") {
+        if (response?.data) {
           toast.success("Product added to cart successfully!");
+          handleRemoveProduct(id)
         } else {
           toast.error("Failed to add product to cart");
         }
@@ -90,6 +91,22 @@ export const WishlistPage = () => {
         toast.error("Error adding product to cart");
       }
     };
+
+    const handleRemoveProduct = async (id)=>{
+    try {
+      const response = await axiosInstance({
+        url: `/wishlist/remove/${id}`,
+        method: "DELETE",
+        withCredentials: true,
+      })
+      if (response.data) {
+        fetchWishlistProducts();
+      }
+    } catch (error) {
+      console.error(error,"erro in wishlist and product adding");
+       
+    }
+    }
   
     return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-gray-100 via-white to-gray-100 p-4 md:p-6">
