@@ -29,7 +29,7 @@ export const OrderDetails = () => {
       }
     };
     fetchOrderDetails();
-  }, [id]);
+  }, []);
 
   if (loading) return <div className="text-center py-6">Loading...</div>;
   if (error) return <div className="text-center text-red-500 py-6">{error}</div>;
