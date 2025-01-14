@@ -213,7 +213,7 @@ export const seasonOdearDetails = async (req, res) => {
     res.status(200).json(response);
   } catch (error) {
     console.error("Error fetching order:", error);
-    res.status(500).json({ success: false, message: "Internal server error" });
+    res.status(500).json({ success: false, message: error.message || "Internal server error" });
   }
 };
 
