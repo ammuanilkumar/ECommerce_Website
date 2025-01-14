@@ -178,7 +178,7 @@ export const seasonOdearDetails = async (req, res) => {
         .json({ success: false, message: "User not found" });
     }
 
-    const order = await Session.findOne({ user: userData._id }).populate({
+    const order = await Session.find({ user: userData._id }).populate({
       path: "products.product",
       select: "image title price",
     });

@@ -6,12 +6,12 @@ export const OrderDetails = () => {
   const [orderDetails, setOrderDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { id } = useParams(); // Dynamic order ID from URL
+   // Dynamic order ID from URL
 
   useEffect(() => {
     const fetchOrderDetails = async () => {
       try {
-        const response = await axiosInstance.get(`user/order/${id}`, {
+        const response = await axiosInstance.get(`user/order`, {
           withCredentials: true,
         });
        
