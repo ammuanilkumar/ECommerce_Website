@@ -15,7 +15,7 @@ import { OrderDetails } from "../pages/userPages/OrderDetails";
 import { UserAuth } from "./protectedRoutes/UserAuth";
 import { WishlistPage } from "../pages/userPages/Wishlistpage";
 import {UpdateProfileForm} from "../pages/userPages/UpdateProfileForm";
-import { AdminLoginPage } from "./../pages/adminPages/AdminLogin";
+import  AdminLoginPage  from "./../pages/adminPages/AdminLogin";
 import { AdminAuth } from "./protectedRoutes/AdminAuth";
 
 import { AdminHeader } from "../components/admin/AdminHeader";
@@ -33,7 +33,7 @@ import { AdminLayout } from "../layouts/AdminLayout";
 import { CancelPage } from "../pages/userPages/CancelPage";
 
 import { SuccessPage } from "../pages/userPages/SuccessPage";
-import { UpdateAdminProfile } from "../pages/adminPages/UpdateAdminProfile";
+import  UpdateAdminProfile  from "../pages/adminPages/UpdateAdminProfile";
 
 export const router = createBrowserRouter([
   {
