@@ -167,6 +167,63 @@ export const userLogout = async (req, res) => {
   }
 };
 
+// export const seasonOdearDetails = async (req, res) => {
+//   try {
+//     const user = req.user; // Assumes authUser middleware sets req.user
+//     const userData = await User.find({ email: user.email });
+
+//     if (!userData) {
+//       return res
+//         .status(404)
+//         .json({ success: false, message: "User not found" });
+//     }
+
+//     // Fetch the user's order and populate the product details
+//     const order = await Session.findOne({ user: userData._id }).populate({
+//       path: "products.product", // Populate the product details
+//       select: "image title price", // Select only the required fields
+//     });
+//     console.log("order: ", order);
+//     if (!order) {
+//       return res
+//         .status(404)
+//         .json({ success: false, message: "Order not found" });
+//     }
+
+//     // Calculate total price
+//     const totalPrice = order.products.reduce((total, item) => {
+//       return total + item.product.price * item.quantity;
+//     }, 0);
+
+//     // Format the response to include product details and total price
+//     const response = {
+//       sessionId: order.sessionId,
+//       products: order.products.map((item) => ({
+//         img: item.product.image,
+//         title: item.product.title,
+//         price: item.product.price,
+//         quantity: item.quantity,
+//         totalProductPrice: item.product.price * item.quantity,
+//       })),
+//       totalPrice: totalPrice,
+//       currency: order.currency,
+//       payment_status: order.payment_status,
+//     };
+
+//     // Return the order details
+//     res.status(200).json(response);
+//   } catch (error) {
+//     console.error("Error fetching order:", error);
+//     res
+//       .status(500)
+//       .json({ success: false, message: "Internal server error!!!" });
+//   }
+// };
+
+
+// In your backend route handler (assuming you're using Express.js)
+
+
 export const seasonOdearDetails = async (req, res) => {
   try {
     const user = req.user; // Assumes authUser middleware sets req.user
@@ -178,26 +235,21 @@ export const seasonOdearDetails = async (req, res) => {
         .json({ success: false, message: "User not found" });
     }
 
-    const order = await Session.find({ user: userData._id }).populate({
-      path: "products.product",
-      select: "image title price",
+    // Fetch all orders for the user and populate product details
+    const orders = await Session.find({ user: userData._id }).populate({
+      path: "products.product", // Populate the product details
+      select: "image title price", // Select only the required fields
     });
 
-    if (!order) {
+    if (!orders || orders.length === 0) {
       return res
         .status(404)
-        .json({ success: false, message: "Order not found" });
+        .json({ success: false, message: "No orders found for this user" });
     }
 
-    const totalPrice = order.products.reduce((total, item) => {
-      return total + item.product.price * item.quantity;
-    }, 0);
-
-    const response = {
+    // Format the response to include all orders
+    const response = orders.map((order) => ({
       sessionId: order.sessionId,
-      id: order._id, // Add an ID field to match frontend expectations
-      date: order.createdAt, // Add a date field
-      status: order.payment_status,
       products: order.products.map((item) => ({
         img: item.product.image,
         title: item.product.title,
@@ -205,19 +257,26 @@ export const seasonOdearDetails = async (req, res) => {
         quantity: item.quantity,
         totalProductPrice: item.product.price * item.quantity,
       })),
-      totalPrice: totalPrice,
+      totalPrice: order.products.reduce((total, item) => {
+        return total + item.product.price * item.quantity;
+      }, 0),
       currency: order.currency,
       payment_status: order.payment_status,
-    };
-
-    res.status(200).json(response);
+      status: order.status,
+      createdAt: order.createdAt,
+    }));
+console.log("response==>",response);
+    // Return all orders for the user
+    res.status(200).json({ success: true, orders: response });
   } catch (error) {
-    console.error("Error fetching order:", error);
-    res.status(500).json({ success: false, message: error.message || "Internal server error" });
+    console.error("Error fetching orders:", error);
+    res
+      .status(500)
+      .json({ success: false, message: "Internal server error!!!" });
   }
 };
 
-// In your backend route handler (assuming you're using Express.js)
+
 export const updateUserProfile = async (req, res) => {
   try {
     const { name, phone } = req.body; // Get updated fields from the request body

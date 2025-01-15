@@ -67,13 +67,13 @@ export const adminLogin = async (req, res) => {
     }
 
     // Generate token
-    const token = generateAdminToken(adminExists.email); 
+    const token = generateAdminToken(adminExists.email);
 
     // Set cookie
     res.cookie("token", token, {
       sameSite: "None", // Required for cross-site cookies
-      secure: true,    // HTTPS
-      httpOnly: true,  
+      secure: true, // HTTPS
+      httpOnly: true,
     });
 
     // Respond to client
@@ -82,9 +82,7 @@ export const adminLogin = async (req, res) => {
       .json({ success: true, message: "Admin login successful", token });
   } catch (error) {
     console.error("Error during admin login:", error);
-    res
-      .status(500)
-      .json({ success: false, message: "Internal server error" });
+    res.status(500).json({ success: false, message: "Internal server error" });
   }
 };
 
@@ -394,7 +392,6 @@ export const getAllUserOrders = async (req, res) => {
               id: user._id,
               name: user.name,
               email: user.email,
-          
             },
           };
         });
@@ -415,5 +412,68 @@ export const getAllUserOrders = async (req, res) => {
   } catch (error) {
     console.error("Error fetching user orders:", error);
     return res.status(500).json({ success: false, message: "Server error" });
+  }
+};
+
+export const updateAdminProfile = async (req, res) => {
+  try {
+    const { name, email } = req.body;
+    const adminData = req.admin; // Data injected by middleware
+
+    console.log("Authenticated Admin Data:", adminData);
+
+    // Validate required fields
+    if (!name || !email) {
+      return res.status(400).json({
+        success: false,
+        message: "Name and email are required fields.",
+      });
+    }
+
+    // Fetch the admin from the database using email from middleware
+    const currentAdmin = await Admin.findOne({ email: adminData.email });
+    if (!currentAdmin) {
+      return res.status(404).json({
+        success: false,
+        message: "Admin not found.",
+      });
+    }
+
+    // Check if the new email is already in use by another admin
+    if (email !== currentAdmin.email) {
+      const emailExists = await Admin.findOne({ email });
+      if (emailExists) {
+        return res.status(400).json({
+          success: false,
+          message: "The provided email is already in use by another admin.",
+        });
+      }
+    }
+
+    // Update the admin profile
+    const updatedAdminProfile = await Admin.findByIdAndUpdate(
+      currentAdmin._id,
+      { name, email },
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedAdminProfile) {
+      return res.status(404).json({
+        success: false,
+        message: `Admin with ID ${currentAdmin._id} not found.`,
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Admin profile updated successfully.",
+      data: updatedAdminProfile,
+    });
+  } catch (error) {
+    console.error("Error updating admin profile:", error);
+    res.status(500).json({
+      success: false,
+      message: "Internal server error.",
+    });
   }
 };

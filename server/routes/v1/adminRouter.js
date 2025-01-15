@@ -15,6 +15,7 @@ import {
   getAllUsersCarts,
   getSingleUser,
   getAllReviews,
+  updateAdminProfile,
 } from "../../controller/adminController.js";
 import { authAdmin } from "../../middlewares/authAdmin.js";
 
@@ -28,18 +29,16 @@ router.get("/check-admin", authAdmin, checkAdmin);
 router.get("/getAllProducts", authAdmin, getAllProducts);
 router.get("/details/:id", authAdmin, getAdminProductDetails);
 router.get("/getuserlist", authAdmin, getUsersList);
-router.get("/getSingleUser/:id", authAdmin, getSingleUser);   
-router.delete("/deleteProduct/:id", authAdmin, deleteProduct);  
+router.get("/getSingleUser/:id", authAdmin, getSingleUser);
+router.delete("/deleteProduct/:id", authAdmin, deleteProduct);
 router.delete("/deleteUser/:id", authAdmin, deleteUser); //enni ??
 
-router.get("/getAllReviews", authAdmin, getAllReviews);   
+router.get("/getAllReviews", authAdmin, getAllReviews);
 
-
-
+router.post("/update-admin-details", authAdmin, updateAdminProfile);
 
 router.get("/getuserorders", authAdmin, getAllUserOrders);
 router.get("/getallcarts", authAdmin, getAllUsersCarts);
 router.get("/getCart/:id", authAdmin, getSingleUserCart);
 
 export default router;
-

@@ -23,8 +23,8 @@ const sessionSchema = new mongoose.Schema({
       },
       status: {
         type: String,
-        enum: ["processing", "shipped", "delivered", "canceled"],
-        default: "processing", // Default status for individual products
+        enum: ["order placed"],
+        default: "order placed", // Default status for individual products
       },
     },
   ],
@@ -43,8 +43,8 @@ const sessionSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ["processing", "shipped", "delivered", "canceled"],
-    default: "processing",
+    enum: ["order placed", "shipped", "delivered", "canceled"],
+    default: "order placed",
   },
   createdAt: {
     type: Date,

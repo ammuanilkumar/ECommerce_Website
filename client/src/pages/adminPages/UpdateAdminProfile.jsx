@@ -1,21 +1,16 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
 import { axiosInstance } from "../../config/axiosInstance";
 
-const UpdateProfileForm = () => {
-  // State to store the user's profile data to be updated
+const UpdateAdminProfile = () => {
   const [userData, setUserData] = useState({
     name: "",
-
-    phone: "",
+    email: "",
   });
 
-  // State for loading, error, and success messages
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
 
-  // Handle input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setUserData((prevData) => ({
@@ -24,7 +19,6 @@ const UpdateProfileForm = () => {
     }));
   };
 
-  // Handle form submission to update the user's profile
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -33,10 +27,10 @@ const UpdateProfileForm = () => {
 
     try {
       const response = await axiosInstance({
-        url: `/user/profile-update`, // Include ID in the URL
+        url: "/admin/update-admin-details",
         method: "POST",
-        data: userData,
         withCredentials: true,
+        data: userData,
       });
 
       if (response.data.updatedUser) {
@@ -44,7 +38,9 @@ const UpdateProfileForm = () => {
         setUserData(response.data.updatedUser);
       }
     } catch (error) {
-      setError("Failed to update profile");
+      setError(
+        error.response?.data?.message || "Failed to update profile. Please try again."
+      );
     } finally {
       setLoading(false);
     }
@@ -56,13 +52,14 @@ const UpdateProfileForm = () => {
         Update Your Profile
       </h2>
 
-      {loading && <p className="text-center text-blue-500">Loading...</p>}
+      {loading && <p className="text-center text-blue-500">Updating...</p>}
       {error && <p className="text-center text-red-500">{error}</p>}
       {successMessage && (
         <p className="text-center text-green-500">{successMessage}</p>
       )}
 
       <form onSubmit={handleSubmit} className="space-y-4">
+        {/* Name Input */}
         <div className="form-group">
           <label
             htmlFor="name"
@@ -81,26 +78,26 @@ const UpdateProfileForm = () => {
           />
         </div>
 
-      
-
+        {/* Email Input */}
         <div className="form-group">
           <label
-            htmlFor="phone"
+            htmlFor="email"
             className="block text-sm font-medium text-gray-700"
           >
-            Phone:
+            Email:
           </label>
           <input
-            type="tel"
-            id="phone"
-            name="phone"
-            value={userData.phone}
+            type="email"
+            id="email"
+            name="email"
+            value={userData.email}
             onChange={handleInputChange}
             className="mt-1 p-2 border border-gray-300 rounded-md w-full"
             required
           />
         </div>
 
+        {/* Submit Button */}
         <button
           type="submit"
           disabled={loading}
@@ -113,4 +110,4 @@ const UpdateProfileForm = () => {
   );
 };
 
-export default UpdateProfileForm;
+export default UpdateAdminProfile;

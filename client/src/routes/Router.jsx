@@ -27,6 +27,7 @@ import AdminCreateProduct from "../pages/adminPages/AdminCreateProduct";
 import AdminDElAndUpdate from "../pages/adminPages/AdminDElAndUpdate";
 import AdminUserOrder from "../pages/adminPages/AdminUserOrder";
 import AdminUserDetails from "../pages/adminPages/AdminUserDetails";
+import UpdateAdminProfile from "../pages/adminPages/updateAdminProfile";
 import { AdminLayout } from "../layouts/AdminLayout";
 
 import { CancelPage } from "../pages/userPages/CancelPage";
@@ -156,6 +157,19 @@ export const router = createBrowserRouter([
         path: "user-details",
         element: <AdminUserDetails />,
       },
+      {
+        path: "user-details",
+        element: <AdminUserDetails />,
+      },
+      {
+        path: "user-details",
+        element: <AdminUserDetails />,
+      },
+      {
+        path: "update-admin-details",
+        element: <UpdateAdminProfile />,
+      },
+
     ],
   },
 ]);

@@ -14,6 +14,7 @@ const AdminUserDetails = () => {
           method: "GET",
           withCredentials: true,
         });
+        console.log("Fetched User Data:", response?.data?.data);
         setUserData(response?.data?.data || []);
       } catch (error) {
         console.error("Error fetching user list:", error);
@@ -22,6 +23,7 @@ const AdminUserDetails = () => {
         setLoading(false);
       }
     };
+  
 
     fetchUserList();
   }, []);
