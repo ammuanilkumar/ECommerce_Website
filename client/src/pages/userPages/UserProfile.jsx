@@ -57,7 +57,8 @@ export const UserProfile = () => {
             <div>
               <h2 className="text-2xl font-semibold">{user.name}</h2>
               <p className="text-gray-500">
-                <span className="font-medium text-gray-900">Email:</span> {user.email}
+                <span className="font-medium text-gray-900">Email:</span>{" "}
+                {user.email}
               </p>
             </div>
           </div>
@@ -85,18 +86,19 @@ export const UserProfile = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
           <div className="bg-gray-50 p-6 rounded-lg shadow-inner">
             <h3 className="text-lg font-semibold mb-4">Personal Information</h3>
-            <h2 className="text-center text-1xl font-bold text-gray-900 mb-4 capitalize">Name: {user.name}</h2>
-            <p><span className="font-medium text-gray-900">Email:</span> {user.email}</p>
-            <p><strong>Phone:</strong> +91 {user.phone}</p>
-            
+            <h2 className="text-center text-1xl font-bold text-gray-900 mb-4 capitalize">
+              Name: {user.name}
+            </h2>
+            <p>
+              <span className="font-medium text-gray-900">Email:</span>{" "}
+              {user.email}
+            </p>
+            <p>
+              <strong>Phone:</strong> +91 {user.phone}
+            </p>
           </div>
-         
-          
         </div>
-
       </div>
     </div>
   );
 };
-
-

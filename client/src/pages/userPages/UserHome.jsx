@@ -30,26 +30,6 @@ export const UserHome = () => {
       <Carousel />
        
 
-      {/* Counter Section
-      <div className="bg-white shadow-md rounded-lg p-5 text-center w-full max-w-md">
-        <h2 className="text-2xl font-semibold text-gray-700 mb-5">Exclusive Offers Counter</h2>
-        <div className="flex justify-center items-center gap-4">
-          <button
-            onClick={() => dispatch(decrement())}
-            className="btn btn-primary px-5 py-2 font-semibold text-lg"
-          >
-            -
-          </button>
-          <span className="text-2xl font-bold">{value}</span>
-          <button
-            onClick={() => dispatch(increment())}
-            className="btn btn-primary px-5 py-2 font-semibold text-lg"
-          >
-            +
-          </button>
-        </div>
-      </div> */}
-
     </div>
   );
 };

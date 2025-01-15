@@ -12,7 +12,7 @@ export const AdminHeader = () => {
     <header className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg h-16 flex items-center justify-between px-6 md:px-12 relative z-10">
       {/* Logo and Title */}
       <div className="flex items-center space-x-4">
-        <h1 className="text-xl font-semibold">Admin Dashboard</h1>
+        <h1 className="text-xl font-semibold">ADMIN DASHBOARD</h1>
       </div>
 
       {/* Navigation Links for Desktop */}
@@ -21,31 +21,31 @@ export const AdminHeader = () => {
           to="/admin/Products"
           className="hover:text-gray-200 transition-colors duration-300"
         >
-          Products
+          PRODUCTS
         </Link>
         <Link
           to="/admin/create-product"
           className="hover:text-gray-200 transition-colors duration-300"
         >
-          Create Product
+          CREATE PRODUCT
         </Link>
         <Link
           to="/admin/delete-and-update"
           className="hover:text-gray-200 transition-colors duration-300"
         >
-          Delete & Update
+          DELETE
         </Link>
         <Link
           to="/admin/user-orders"
           className="hover:text-gray-200 transition-colors duration-300"
         >
-          User Orders
+          USER ORDERS
         </Link>
         <Link
           to="/admin/user-details"
           className="hover:text-gray-200 transition-colors duration-300"
         >
-          User Details
+          USER DETAILS
         </Link>
       </nav>
 
@@ -84,35 +84,35 @@ export const AdminHeader = () => {
             className="text-white hover:text-gray-200 transition-colors duration-300"
             onClick={toggleMobileMenu}
           >
-            Products
+             PRODUCTS
           </Link>
           <Link
             to="/admin/create-product"
             className="text-white hover:text-gray-200 transition-colors duration-300"
             onClick={toggleMobileMenu}
           >
-            Create Product
+            CREATE PRODUCT
           </Link>
           <Link
             to="/admin/delete-and-update"
             className="text-white hover:text-gray-200 transition-colors duration-300"
             onClick={toggleMobileMenu}
           >
-            Delete & Update
+            DELETE
           </Link>
           <Link
             to="/admin/user-orders"
             className="text-white hover:text-gray-200 transition-colors duration-300"
             onClick={toggleMobileMenu}
           >
-            User Orders
+            USER ORDERS
           </Link>
           <Link
             to="/admin/user-details"
             className="text-white hover:text-gray-200 transition-colors duration-300"
             onClick={toggleMobileMenu}
           >
-            User Details
+             USER DETAILS
           </Link>
         </nav>
       </div>
@@ -121,12 +121,10 @@ export const AdminHeader = () => {
       <div className="flex items-center gap-8">
         <Link to="/admin/profile">
           <button className="bg-white text-blue-600 px-6 py-2 rounded-full font-semibold shadow-md hover:bg-gray-100 transition-colors duration-300">
-            Profile
+            PROFILE
           </button>
         </Link>
       </div>
     </header>
   );
 };
-
-
