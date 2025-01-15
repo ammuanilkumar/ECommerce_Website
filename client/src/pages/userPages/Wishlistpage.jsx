@@ -1,13 +1,7 @@
-import { Link } from "react-router-dom";
-
-import { ShoppingCart } from "lucide-react";
-import { HeartIcon } from "@heroicons/react/24/outline";
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { ShoppingCart, Trash } from "lucide-react";
 import toast from "react-hot-toast";
-import { Trash } from "lucide-react";
-// import { toast } from 'react-toastify';
-import Swal from "sweetalert2";
-
 import { axiosInstance } from "../../config/axiosInstance";
 
 export const WishlistPage = () => {
@@ -21,8 +15,11 @@ export const WishlistPage = () => {
         method: "GET",
         withCredentials: true,
       });
+
       if (response?.data?.data) {
-        setProducts(response?.data?.data);
+        // Filter out items with `product: null`
+        const validProducts = response.data.data.filter((item) => item?.product);
+        setProducts(validProducts);
       } else {
         toast.error("No items found in your wishlist");
       }
@@ -38,38 +35,28 @@ export const WishlistPage = () => {
 
   // Remove item from wishlist
   const handleRemove = async (id) => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "Do you really want to remove this item from your wishlist?",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#d33",
-      cancelButtonColor: "#3085d6",
-      confirmButtonText: "Yes, remove it!",
-    }).then(async (result) => {
-      if (result.isConfirmed) {
-        try {
-          const response = await axiosInstance({
-            url: `/wishlist/remove/${id}`,
-            method: "DELETE",
-            withCredentials: true,
-          });
-          if (response?.data?.message === "Product removed from wishlist") {
-            setProducts((prevProducts) =>
-              prevProducts.filter((item) => item.product._id !== id)
-            );
-            Swal.fire("Removed!", "Your item has been removed.", "success");
-          } else {
-            toast.error("Failed to remove item");
-          }
-        } catch (error) {
-          console.error(error);
-          toast.error("Error removing product");
-        }
+    try {
+      const response = await axiosInstance({
+        url: `/wishlist/remove/${id}`,
+        method: "DELETE",
+        withCredentials: true,
+      });
+
+      if (response?.data?.message === "Product removed from wishlist") {
+        setProducts((prevProducts) =>
+          prevProducts.filter((item) => item.product._id !== id)
+        );
+        toast.success("Item removed from wishlist");
+      } else {
+        toast.error("Failed to remove item");
       }
-    });
+    } catch (error) {
+      console.error(error);
+      toast.error("Error removing product");
+    }
   };
 
+  // Add product to cart and remove from wishlist
   const addProductToUserCart = async (id, quantity = 1) => {
     try {
       const response = await axiosInstance({
@@ -81,28 +68,13 @@ export const WishlistPage = () => {
 
       if (response?.data) {
         toast.success("Product added to cart successfully!");
-        handleRemoveProduct(id);
+        handleRemove(id);
       } else {
         toast.error("Failed to add product to cart");
       }
     } catch (error) {
       console.error(error);
       toast.error("Error adding product to cart");
-    }
-  };
-
-  const handleRemoveProduct = async (id) => {
-    try {
-      const response = await axiosInstance({
-        url: `/wishlist/remove/${id}`,
-        method: "DELETE",
-        withCredentials: true,
-      });
-      if (response.data) {
-        fetchWishlistProducts();
-      }
-    } catch (error) {
-      console.error(error, "erro in wishlist and product adding");
     }
   };
 
@@ -126,7 +98,7 @@ export const WishlistPage = () => {
                 <div className="flex items-center gap-4 md:gap-6">
                   <img
                     src={item.product.image}
-                    alt={item.product.name}
+                    alt={item.product.name || "Product Image"}
                     className="w-16 h-16 md:w-20 md:h-20 object-cover rounded-xl shadow-sm"
                   />
                   <div>
@@ -140,7 +112,6 @@ export const WishlistPage = () => {
                 </div>
 
                 <div className="flex mt-4 md:mt-0 items-center gap-2 md:gap-4">
-                  {/* <HeartIcon className="text-red-500 hover:text-red-700 transition-colors" /> */}
                   <button
                     onClick={() => addProductToUserCart(item.product._id)}
                     className="bg-blue-600 text-white font-semibold py-2 px-3 md:py-2 md:px-4 rounded-lg hover:bg-blue-700 transition duration-300 shadow-md text-sm md:text-base"
