@@ -12,7 +12,7 @@ export const OrderDetails = () => {
         const response = await axiosInstance.get("user/order", {
           withCredentials: true,
         });
-        console.log(response.data); 
+        console.log(response.data);
 
         if (response?.data?.success && response?.data?.orders?.length > 0) {
           setOrders(response.data.orders);
@@ -30,7 +30,8 @@ export const OrderDetails = () => {
   }, []);
 
   if (loading) return <div className="text-center py-6">Loading...</div>;
-  if (error) return <div className="text-center text-red-500 py-6">{error}</div>;
+  if (error)
+    return <div className="text-center text-red-500 py-6">{error}</div>;
 
   return (
     <div className="min-h-screen bg-gray-100 py-10 flex justify-center">
@@ -40,22 +41,26 @@ export const OrderDetails = () => {
         {orders.map((order, orderIndex) => (
           <div key={orderIndex} className="mb-10">
             <div className="border-b pb-4 mb-4">
-              <h2 className="text-xl font-semibold mb-2">Order #{orderIndex + 1}</h2>
+              <h2 className="text-xl font-semibold mb-2">
+                Order #{orderIndex + 1}
+              </h2>
               <p className="text-gray-700">
                 <strong>Order ID:</strong> {order.sessionId}
               </p>
               <p className="text-gray-700">
-                <strong>Date:</strong> {new Date(order.createdAt).toLocaleString()}
+                <strong>Date:</strong>{" "}
+                {new Date(order.createdAt).toLocaleString()}
               </p>
               <p className="text-gray-700">
                 <strong>Status:</strong>{" "}
                 <span className="badge badge-success">{order.status}</span>
               </p>
               <p className="text-gray-700">
-                <strong>Total Price:</strong> {order.totalPrice} {order.currency.toUpperCase()}
+                <strong>Total Price:</strong> {order.totalPrice}{" "}
+                {order.currency.toUpperCase()}
               </p>
               <p className="text-gray-700">
-                <strong>Payment Status:</strong> completed 
+                <strong>Payment Status:</strong> completed
               </p>
             </div>
 
@@ -64,8 +69,12 @@ export const OrderDetails = () => {
               <table className="table w-full border-collapse border border-gray-300">
                 <thead>
                   <tr>
-                    <th className="border border-gray-300 px-4 py-2">Product</th>
-                    <th className="border border-gray-300 px-4 py-2">Quantity</th>
+                    <th className="border border-gray-300 px-4 py-2">
+                      Product
+                    </th>
+                    <th className="border border-gray-300 px-4 py-2">
+                      Quantity
+                    </th>
                     <th className="border border-gray-300 px-4 py-2">Price</th>
                     <th className="border border-gray-300 px-4 py-2">Total</th>
                     <th className="border border-gray-300 px-4 py-2">Image</th>
@@ -74,10 +83,18 @@ export const OrderDetails = () => {
                 <tbody>
                   {order.products.map((product, productIndex) => (
                     <tr key={productIndex}>
-                      <td className="border border-gray-300 px-4 py-2">{product.title}</td>
-                      <td className="border border-gray-300 px-4 py-2">{product.quantity}</td>
-                      <td className="border border-gray-300 px-4 py-2">{product.price}</td>
-                      <td className="border border-gray-300 px-4 py-2">{product.totalProductPrice}</td>
+                      <td className="border border-gray-300 px-4 py-2">
+                        {product.title}
+                      </td>
+                      <td className="border border-gray-300 px-4 py-2">
+                        {product.quantity}
+                      </td>
+                      <td className="border border-gray-300 px-4 py-2">
+                        {product.price}
+                      </td>
+                      <td className="border border-gray-300 px-4 py-2">
+                        {product.totalProductPrice}
+                      </td>
                       <td className="border border-gray-300 px-4 py-2">
                         <img
                           src={product.img}
@@ -92,8 +109,6 @@ export const OrderDetails = () => {
             </div>
           </div>
         ))}
-
-       
       </div>
     </div>
   );

@@ -167,66 +167,19 @@ export const userLogout = async (req, res) => {
   }
 };
 
-// export const seasonOdearDetails = async (req, res) => {
-//   try {
-//     const user = req.user; // Assumes authUser middleware sets req.user
-//     const userData = await User.find({ email: user.email });
-
-//     if (!userData) {
-//       return res
-//         .status(404)
-//         .json({ success: false, message: "User not found" });
-//     }
-
-//     // Fetch the user's order and populate the product details
-//     const order = await Session.findOne({ user: userData._id }).populate({
-//       path: "products.product", // Populate the product details
-//       select: "image title price", // Select only the required fields
-//     });
-//     console.log("order: ", order);
-//     if (!order) {
-//       return res
-//         .status(404)
-//         .json({ success: false, message: "Order not found" });
-//     }
-
-//     // Calculate total price
-//     const totalPrice = order.products.reduce((total, item) => {
-//       return total + item.product.price * item.quantity;
-//     }, 0);
-
-//     // Format the response to include product details and total price
-//     const response = {
-//       sessionId: order.sessionId,
-//       products: order.products.map((item) => ({
-//         img: item.product.image,
-//         title: item.product.title,
-//         price: item.product.price,
-//         quantity: item.quantity,
-//         totalProductPrice: item.product.price * item.quantity,
-//       })),
-//       totalPrice: totalPrice,
-//       currency: order.currency,
-//       payment_status: order.payment_status,
-//     };
-
-//     // Return the order details
-//     res.status(200).json(response);
-//   } catch (error) {
-//     console.error("Error fetching order:", error);
-//     res
-//       .status(500)
-//       .json({ success: false, message: "Internal server error!!!" });
-//   }
-// };
-
-
-// In your backend route handler (assuming you're using Express.js)
 
 
 export const seasonOdearDetails = async (req, res) => {
   try {
-    const user = req.user; // Assumes authUser middleware sets req.user
+    // Ensure the user is authenticated
+    if (!req.user) {
+      return res
+        .status(401)
+        .json({ success: false, message: "Unauthorized: User not authenticated" });
+    }
+
+    // Fetch the user data based on the authenticated user's email
+    const user = req.user;
     const userData = await User.findOne({ email: user.email });
 
     if (!userData) {
@@ -235,7 +188,7 @@ export const seasonOdearDetails = async (req, res) => {
         .json({ success: false, message: "User not found" });
     }
 
-    // Fetch all orders for the user and populate product details
+    
     const orders = await Session.find({ user: userData._id }).populate({
       path: "products.product", // Populate the product details
       select: "image title price", // Select only the required fields
@@ -247,26 +200,32 @@ export const seasonOdearDetails = async (req, res) => {
         .json({ success: false, message: "No orders found for this user" });
     }
 
-    // Format the response to include all orders
+    // Format the response to include valid orders and products
     const response = orders.map((order) => ({
       sessionId: order.sessionId,
-      products: order.products.map((item) => ({
-        img: item.product.image,
-        title: item.product.title,
-        price: item.product.price,
-        quantity: item.quantity,
-        totalProductPrice: item.product.price * item.quantity,
-      })),
+      products: order.products
+        .filter((item) => item.product) // Ensure products are valid (non-null)
+        .map((item) => ({
+          img: item.product.image,
+          title: item.product.title,
+          price: item.product.price,
+          quantity: item.quantity,
+          totalProductPrice: (item.product.price || 0) * (item.quantity || 0),
+        })),
       totalPrice: order.products.reduce((total, item) => {
-        return total + item.product.price * item.quantity;
+        const price = item.product?.price || 0;
+        const quantity = item.quantity || 0;
+        return total + price * quantity;
       }, 0),
       currency: order.currency,
       payment_status: order.payment_status,
       status: order.status,
       createdAt: order.createdAt,
     }));
-console.log("response==>",response);
-    // Return all orders for the user
+
+    console.log("Formatted Order Response:", response);
+
+    // Return the formatted orders
     res.status(200).json({ success: true, orders: response });
   } catch (error) {
     console.error("Error fetching orders:", error);
