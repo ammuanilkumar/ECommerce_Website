@@ -59,6 +59,10 @@ export const router = createBrowserRouter([
         path: "signup",
         element: <SignupPage />,
       },
+      {
+        path: "product",
+        element: <ProductPage />,
+      },
     ],
   },
   {
@@ -85,10 +89,12 @@ export const router = createBrowserRouter([
         path: "orderdetails",
         element: <OrderDetails />,
       },
+
       {
         path: "product",
         element: <ProductPage />,
       },
+ 
       {
         path: "product-details/:id",
         element: <ProductDetails />,

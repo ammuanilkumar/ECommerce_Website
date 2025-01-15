@@ -47,7 +47,7 @@ const Header = () => {
             About
           </Link>
           <Link
-            to={"/user/product"}
+            to={"/product"}
             className="hover:text-gray-200 transition-colors duration-300"
           >
             Product

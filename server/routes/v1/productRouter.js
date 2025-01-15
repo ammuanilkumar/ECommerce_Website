@@ -13,7 +13,7 @@ import { upload } from "../../middlewares/uploadMiddleware.js";
 import { authAdmin } from "../../middlewares/authAdmin.js";
 const router = express.Router();
 
-router.get("/productList", authUser, getProductList);
+router.get("/productList", getProductList);
 router.get("/details/:id", authUser, getProductDetails);
 router.put("/update/:id", updateProduct);
 //router.delete("/delete");

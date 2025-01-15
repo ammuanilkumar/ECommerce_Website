@@ -39,7 +39,7 @@ export const ProductPage = () => {
             <ProductCards key={value._id} product={value} />
           ))
         ) : (
-          <p className="col-span-full text-center text-lg">No products found</p>
+          <p className="col-span-full text-center text-lg">Loading.....</p>
         )}
       </div>
     </div>
