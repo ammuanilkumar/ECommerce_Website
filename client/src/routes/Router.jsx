@@ -14,7 +14,7 @@ import { UserProfile } from "../pages/userPages/UserProfile";
 import { OrderDetails } from "../pages/userPages/OrderDetails";
 import { UserAuth } from "./protectedRoutes/UserAuth";
 import { WishlistPage } from "../pages/userPages/Wishlistpage";
-
+import {UpdateProfileForm} from "../pages/userPages/UpdateProfileForm";
 import { AdminLoginPage } from "./../pages/adminPages/AdminLogin";
 import { AdminAuth } from "./protectedRoutes/AdminAuth";
 
