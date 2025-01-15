@@ -20,7 +20,9 @@ export const UserProfile = () => {
         method: "GET",
         withCredentials: true,
       });
-      setUser(response?.data?.data);
+      if (response?.data?.success) {
+        setUser(response?.data?.data);
+      }
     } catch (error) {
       toast.error("Error fetching data from server");
     }
@@ -60,6 +62,11 @@ export const UserProfile = () => {
                 <span className="font-medium text-gray-900">Email:</span>{" "}
                 {user.email}
               </p>
+              {/* Display phone */}
+              <p>
+                <span className="font-medium text-gray-900">Mobile:</span>{" "}
+                {user.mobile}
+              </p>
             </div>
           </div>
           <div className="flex flex-col md:flex-row md:space-x-4 w-full md:w-auto">
@@ -94,7 +101,7 @@ export const UserProfile = () => {
               {user.email}
             </p>
             <p>
-              <strong>Phone:</strong> +91 {user.phone}
+              <strong>Phone:</strong> +91 {user.mobile}
             </p>
           </div>
         </div>

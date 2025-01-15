@@ -1,15 +1,40 @@
-import React, { useState } from "react";
-import { axiosInstance } from "../../config/axiosInstance";
+import React, { useState, useEffect } from "react";
+import { axiosInstance } from "../../config/axiosInstance"; // Adjust this path if needed
+import { useNavigate } from "react-router-dom"; // If you want to navigate after a successful update
 
 export const UpdateAdminProfile = () => {
   const [userData, setUserData] = useState({
     name: "",
-    email: "",
+    mobile: "", // Only name and mobile now
   });
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const navigate = useNavigate();
+
+  // Fetch current admin data (optional, if you need to populate the fields initially)
+  useEffect(() => {
+    const fetchAdminData = async () => {
+      try {
+        const response = await axiosInstance({
+          url: "/admin/profile", // Assuming this route exists to fetch the current admin profile
+          method: "GET",
+          withCredentials: true,
+        });
+        if (response.data.data) {
+          setUserData({
+            name: response.data.data.name,
+            mobile: response.data.data.mobile,
+          });
+        }
+      } catch (error) {
+        console.error("Error fetching admin data:", error);
+        setError("Failed to fetch admin data.");
+      }
+    };
+    fetchAdminData();
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -33,9 +58,11 @@ export const UpdateAdminProfile = () => {
         data: userData,
       });
 
-      if (response.data.updatedUser) {
+      if (response.data.success) {
         setSuccessMessage("Profile updated successfully!");
-        setUserData(response.data.updatedUser);
+        setUserData(response.data.data); // Update with the new user data
+        // Optionally redirect after update
+        // navigate('/dashboard'); 
       }
     } catch (error) {
       setError(
@@ -78,19 +105,19 @@ export const UpdateAdminProfile = () => {
           />
         </div>
 
-        {/* Email Input */}
+        {/* Mobile Input */}
         <div className="form-group">
           <label
-            htmlFor="email"
+            htmlFor="mobile"
             className="block text-sm font-medium text-gray-700"
           >
-            Email:
+            Mobile:
           </label>
           <input
-            type="email"
-            id="email"
-            name="email"
-            value={userData.email}
+            type="text"
+            id="mobile"
+            name="mobile"
+            value={userData.mobile}
             onChange={handleInputChange}
             className="mt-1 p-2 border border-gray-300 rounded-md w-full"
             required
@@ -109,5 +136,3 @@ export const UpdateAdminProfile = () => {
     </div>
   );
 };
-
-

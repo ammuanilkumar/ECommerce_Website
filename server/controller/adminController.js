@@ -90,8 +90,11 @@ export const adminProfile = async (req, res) => {
   try {
     // const {id} = req.id
     const admin = req.admin;
+    console.log(admin);
+
     // const adminData = await Admin.findById(id);
 
+    // const adminData = await
     const adminData = await Admin.findOne({ email: admin.email }).select(
       "-password"
     );
@@ -415,69 +418,6 @@ export const getAllUserOrders = async (req, res) => {
   }
 };
 
-export const updateAdminProfile = async (req, res) => {
-  try {
-    const { name, email } = req.body;
-    const adminData = req.admin; // Data injected by middleware
-
-    console.log("Authenticated Admin Data:", adminData);
-
-    // Validate required fields
-    if (!name || !email) {
-      return res.status(400).json({
-        success: false,
-        message: "Name and email are required fields.",
-      });
-    }
-
-    // Fetch the admin from the database using email from middleware
-    const currentAdmin = await Admin.findOne({ email: adminData.email });
-    if (!currentAdmin) {
-      return res.status(404).json({
-        success: false,
-        message: "Admin not found.",
-      });
-    }
-
-    // Check if the new email is already in use by another admin
-    if (email !== currentAdmin.email) {
-      const emailExists = await Admin.findOne({ email });
-      if (emailExists) {
-        return res.status(400).json({
-          success: false,
-          message: "The provided email is already in use by another admin.",
-        });
-      }
-    }
-
-    // Update the admin profile
-    const updatedAdminProfile = await Admin.findByIdAndUpdate(
-      currentAdmin._id,
-      { name, email },
-      { new: true, runValidators: true }
-    );
-
-    if (!updatedAdminProfile) {
-      return res.status(404).json({
-        success: false,
-        message: `Admin with ID ${currentAdmin._id} not found.`,
-      });
-    }
-
-    res.status(200).json({
-      success: true,
-      message: "Admin profile updated successfully.",
-      data: updatedAdminProfile,
-    });
-  } catch (error) {
-    console.error("Error updating admin profile:", error);
-    res.status(500).json({
-      success: false,
-      message: "Internal server error.",
-    });
-  }
-};
-
 export const updateProduct = async (req, res) => {
   const { productId } = req.params;
   const { title, description, brand, price, quantity } = req.body;
@@ -509,12 +449,63 @@ export const updateProduct = async (req, res) => {
       updatedFields,
       { new: true }
     );
-   
-    res.json({ message: "Product updated successfully", data: updatedProduct });
-    console.log("upded-===><",updatedProduct)
 
+    res.json({ message: "Product updated successfully", data: updatedProduct });
+    console.log("upded-===><", updatedProduct);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Failed to update product" });
+  }
+};
+
+export const updateAdminProfile = async (req, res) => {
+  try {
+    const { name, mobile } = req.body;
+    const adminData = req.admin; // Data injected by middleware
+
+    console.log("Authenticated Admin Data:", adminData);
+
+    // Validate required fields
+    if (!name || !mobile) {
+      return res.status(400).json({
+        success: false,
+        message: "Name and mobile are required fields.",
+      });
+    }
+
+    // Fetch the admin from the database using the email from middleware
+    const currentAdmin = await Admin.findOne({ email: adminData.email });
+    if (!currentAdmin) {
+      return res.status(404).json({
+        success: false,
+        message: "Admin not found.",
+      });
+    }
+
+    // Update the admin profile
+    const updatedAdminProfile = await Admin.findByIdAndUpdate(
+      currentAdmin._id,
+      { name, mobile },
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedAdminProfile) {
+      return res.status(404).json({
+        success: false,
+        message: `Admin with ID ${currentAdmin._id} not found.`,
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Admin profile updated successfully.",
+      data: updatedAdminProfile,
+    });
+  } catch (error) {
+    console.error("Error updating admin profile:", error);
+    res.status(500).json({
+      success: false,
+      message: "Internal server error.",
+    });
   }
 };
