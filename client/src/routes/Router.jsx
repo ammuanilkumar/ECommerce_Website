@@ -31,8 +31,9 @@ import AdminUserDetails from "../pages/adminPages/AdminUserDetails";
 import { AdminLayout } from "../layouts/AdminLayout";
 
 import { CancelPage } from "../pages/userPages/CancelPage";
-import UpdateProfileForm from "../pages/userPages/UserProfileUpdate";
+
 import { SuccessPage } from "../pages/userPages/SuccessPage";
+import { UpdateAdminProfile } from "../pages/adminPages/UpdateAdminProfile";
 
 export const router = createBrowserRouter([
   {

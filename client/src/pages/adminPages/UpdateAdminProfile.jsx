@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { axiosInstance } from "../../config/axiosInstance";
 
-const UpdateAdminProfile = () => {
+export const UpdateAdminProfile = () => {
   const [userData, setUserData] = useState({
     name: "",
     email: "",
@@ -110,4 +110,4 @@ const UpdateAdminProfile = () => {
   );
 };
 
-export default UpdateAdminProfile;
+
