@@ -88,30 +88,12 @@ export const UserProfile = () => {
             <h2 className="text-center text-1xl font-bold text-gray-900 mb-4 capitalize">Name: {user.name}</h2>
             <p><span className="font-medium text-gray-900">Email:</span> {user.email}</p>
             <p><strong>Phone:</strong> +91 {user.phone}</p>
-            <p><strong>Address:</strong> </p>
+            
           </div>
-          {/* <div className="bg-gray-50 p-6 rounded-lg shadow-inner">
-            <h3 className="text-lg font-semibold mb-4">Shipping Information</h3>
-            <p><strong>Shipping Address:</strong> 4567 Avenue , Springfield</p>
-            <p><strong>Delivery Preferences:</strong> Leave at the front door</p>
-          </div> */}
-          <div className="bg-gray-50 p-6 rounded-lg shadow-inner">
-            <h3 className="text-lg font-semibold mb-4">Payment Methods</h3>
-            <p><strong>Credit Card:</strong> **** **** **** 1234</p>
-            <p><strong>PayPal:</strong> {user.name}@paypal.com</p>
-          </div>
+         
+          
         </div>
 
-        {/* Optional Account Settings Section */}
-        {/* 
-        <div className="mt-8">
-          <h3 className="text-xl font-semibold mb-4">Account Settings</h3>
-          <div className="flex space-x-4">
-            <button className="btn btn-error">Delete Account</button>
-            <button className="btn btn-outline btn-secondary">Change Password</button>
-          </div>
-        </div>
-        */}
       </div>
     </div>
   );

@@ -31,31 +31,6 @@ export const getProductDetails = async (req, res) => {
   }//Error Handling
 };
 
-// export const createProduct = async (req, res,next) => {
-//   try {
-//     const{title,description,price,category,brand,rating}=req.body;
-//   console.log('image===',req.file);
-//   if (!req.file){
-//     return res.status(400).json({message: 'image not visible'});
-//   }
-
-//   // Upload an image
-//   const uploadResult =await cloudinaryInstance.uploader.upload(req.file.path).catch((error) => {
-//     console.log(error);
-//   });
-
-//   console.log(uploadResult);
-//   const newProduct = new Product({title,description,price,category,brand,rating});
-//   if(uploadResult?.url){
-//     newProduct.image = uploadResult.url;
-//   }
-//   await newProduct.save();
-
-//     res.json({success: true, message:"Product saved successfully",});
-//   } catch (error) {
-//     res.status(error.status||500).json({ message:error.message||"Internal server error" });
-//   }
-// };
 
 export const createProduct = async (req, res) => {
   try {

@@ -93,9 +93,7 @@ export const OrderDetails = () => {
           </div>
         ))}
 
-        <div className="flex justify-end space-x-4">
-          <button className="btn btn-outline btn-secondary">Back</button>
-        </div>
+       
       </div>
     </div>
   );
