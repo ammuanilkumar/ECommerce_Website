@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { axiosInstance } from "../../config/axiosInstance";
 
-const UpdateProfileForm = () => {
+export const UpdateProfileForm = () => {
   // State to store the user's profile data to be updated
   const [userData, setUserData] = useState({
     name: "",
@@ -113,4 +113,4 @@ const UpdateProfileForm = () => {
   );
 };
 
-export default UpdateProfileForm;
+
