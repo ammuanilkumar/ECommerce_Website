@@ -14,7 +14,7 @@ import { UserProfile } from "../pages/userPages/UserProfile";
 import { OrderDetails } from "../pages/userPages/OrderDetails";
 import { UserAuth } from "./protectedRoutes/UserAuth";
 import { WishlistPage } from "../pages/userPages/Wishlistpage";
-// import { WishlistPage } from "../pages/userPages/WishlistPage";
+
 import { AdminLoginPage } from "./../pages/adminPages/AdminLogin";
 import { AdminAuth } from "./protectedRoutes/AdminAuth";
 
@@ -27,7 +27,7 @@ import AdminCreateProduct from "../pages/adminPages/AdminCreateProduct";
 import AdminDElAndUpdate from "../pages/adminPages/AdminDElAndUpdate";
 import AdminUserOrder from "../pages/adminPages/AdminUserOrder";
 import AdminUserDetails from "../pages/adminPages/AdminUserDetails";
-import UpdateAdminProfile from "../pages/adminPages/updateAdminProfile";
+
 import { AdminLayout } from "../layouts/AdminLayout";
 
 import { CancelPage } from "../pages/userPages/CancelPage";
