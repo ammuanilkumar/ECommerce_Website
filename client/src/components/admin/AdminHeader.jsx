@@ -33,7 +33,7 @@ export const AdminHeader = () => {
           to="/admin/delete-and-update"
           className="hover:text-gray-200 transition-colors duration-300"
         >
-          DELETE / update
+          DELETE & UPDATE
         </Link>
         <Link
           to="/admin/user-orders"
@@ -98,7 +98,7 @@ export const AdminHeader = () => {
             className="text-white hover:text-gray-200 transition-colors duration-300"
             onClick={toggleMobileMenu}
           >
-            DELETE / update
+            DELETE & UPDATE
           </Link>
           <Link
             to="/admin/user-orders"
