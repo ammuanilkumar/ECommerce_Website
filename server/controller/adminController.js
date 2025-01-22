@@ -418,45 +418,7 @@ export const getAllUserOrders = async (req, res) => {
   }
 };
 
-export const updateProduct = async (req, res) => {
-  const { productId } = req.params;
-  const { title, description, brand, price, quantity } = req.body;
 
-  try {
-    // Find the product by ID
-    const product = await Product.findById(productId);
-    if (!product) {
-      return res.status(404).json({ message: "Product not found" });
-    }
-
-    // Prepare update fields
-    const updatedFields = {
-      title: title || product.title,
-      description: description || product.description,
-      brand: brand || product.brand,
-      price: price || product.price,
-      quantity: quantity || product.quantity,
-    };
-
-    // If image exists in the request, handle file update (ensure file is uploaded in the frontend)
-    if (req.file) {
-      updatedFields.image = req.file.path;
-    }
-
-    // Update the product
-    const updatedProduct = await Product.findByIdAndUpdate(
-      productId,
-      updatedFields,
-      { new: true }
-    );
-
-    res.json({ message: "Product updated successfully", data: updatedProduct });
-    console.log("upded-===><", updatedProduct);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Failed to update product" });
-  }
-};
 
 export const updateAdminProfile = async (req, res) => {
   try {
@@ -509,3 +471,43 @@ export const updateAdminProfile = async (req, res) => {
     });
   }
 };
+
+// export const updateProduct = async (req, res) => {
+//   const { productId } = req.params;
+//   const { title, description, brand, price, quantity } = req.body;
+
+//   try {
+//     // Find the product by ID
+//     const product = await Product.findById(productId);
+//     if (!product) {
+//       return res.status(404).json({ message: "Product not found" });
+//     }
+
+//     // Prepare update fields
+//     const updatedFields = {
+//       title: title || product.title,
+//       description: description || product.description,
+//       brand: brand || product.brand,
+//       price: price || product.price,
+//       quantity: quantity || product.quantity,
+//     };
+
+//     // If image exists in the request, handle file update (ensure file is uploaded in the frontend)
+//     if (req.file) {
+//       updatedFields.image = req.file.path;
+//     }
+
+//     // Update the product
+//     const updatedProduct = await Product.findByIdAndUpdate(
+//       productId,
+//       updatedFields,
+//       { new: true }
+//     );
+
+//     res.json({ message: "Product updated successfully", data: updatedProduct });
+//     console.log("upded-===><", updatedProduct);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ message: "Failed to update product" });
+//   }
+// };

@@ -18,25 +18,22 @@ export const getProductList = async (req, res) => {
 //Function Declaration
 export const getProductDetails = async (req, res) => {
   try {
-    const { id } = req.params;//Extracting the ID
-    const productDetails = await Product.findById(id);   //Fetching Product Details
+    const { id } = req.params; //Extracting the ID
+    const productDetails = await Product.findById(id); //Fetching Product Details
 
     res.status(200).json({
-      success: true,//Success Response
+      success: true, //Success Response
       message: "fetche product Details",
       data: productDetails,
     });
   } catch (error) {
     res.status(500).json({ success: false, message: "Internal server error" });
-  }//Error Handling
+  } //Error Handling
 };
-
 
 export const createProduct = async (req, res) => {
   try {
     const { title, desc, brand, price, category, stock, ratings } = req.body;
-
-   
 
     // Check if the image is provided
     if (!req.file) {
@@ -105,25 +102,67 @@ export const createProduct = async (req, res) => {
   }
 };
 
-export const updateProduct = async (req, res, next) => {
+export const updateProduct = async (req, res) => {
   try {
-    const { title, description, price, category, brand, rating, image } =
-      req.body;
-    const { id } = req.params;
+    const { id } = req.params; // Product ID from request parameters
+    const { title, desc, brand, price, category, stock } = req.body;
 
-    const updateProduct = await Product.findByIdAndDelete(
-      { id, description, price, category, brand, rating, image },
-      { new: true }
-    );
+    console.log("Request params:", req.params);
+    console.log("Request body:", req.body);
+    console.log("Request file:", req.file);
 
-    res.json({
+    // Validate product existence
+    const product = await Product.findById(id);
+    if (!product) {
+      return res.status(404).json({ success: false, message: "Product not found" });
+    }
+
+    let updatedImageUrl = product.image; // Default to the existing image
+
+    // Handle file upload if a new file is provided
+    if (req.file) {
+      try {
+        const uploadResult = await cloudinaryInstance.uploader.upload(req.file.path, {
+          folder: "e_commerce_website",
+        });
+
+        if (!uploadResult || !uploadResult.url) {
+          throw new Error("Cloudinary upload failed");
+        }
+
+        updatedImageUrl = uploadResult.url; // Use the new image URL
+      } catch (error) {
+        console.error("Error uploading to Cloudinary:", error.message);
+        return res.status(500).json({
+          success: false,
+          message: "Image upload failed",
+        });
+      }
+    }
+
+    // Update product fields
+    product.title = title || product.title;
+    product.desc = desc || product.desc;
+    product.brand = brand || product.brand;
+    product.price = price || product.price;
+    product.category = category || product.category;
+    product.stock = stock || product.stock;
+    product.image = updatedImageUrl;
+
+    // Save the updated product
+    const updatedProduct = await product.save();
+
+    return res.status(200).json({
       success: true,
-      message: "Product updated",
-      data: updateProduct,
+      message: "Product updated successfully",
+      product: updatedProduct,
     });
   } catch (error) {
-    res
-      .status(error.status || 500)
-      .json({ message: error.message || "Internal server error" });
+    console.error("Error updating product:", error.message);
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
   }
 };
+
