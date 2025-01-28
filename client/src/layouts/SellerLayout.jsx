@@ -4,7 +4,7 @@ import { Footer } from "../components/Footer";
 import { Outlet } from "react-router-dom";
 import { SellerHeader } from "../components/seller/SellerHeader";
 
-export const SellerLayout = () => {
+const SellerLayout = () => {
   return (
     <div className="admin-layout">
       <SellerHeader /> 
@@ -21,6 +21,8 @@ export const SellerLayout = () => {
     </div>
   );
 };
+
+export default SellerLayout;
 
 
 
