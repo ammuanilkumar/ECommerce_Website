@@ -14,28 +14,28 @@ import { UserProfile } from "../pages/userPages/UserProfile";
 import { OrderDetails } from "../pages/userPages/OrderDetails";
 import { UserAuth } from "./protectedRoutes/UserAuth";
 import { WishlistPage } from "../pages/userPages/Wishlistpage";
-
 import { AdminAuth } from "./protectedRoutes/AdminAuth";
 import { AdminLoginPage } from "./../pages/adminPages/AdminLogin";
-
 import { AdminHeader } from "../components/admin/AdminHeader";
-
 import { AdminProducts } from "../pages/adminPages/AdminProducts";
 import AdminProfile from "../pages/adminPages/AdminProfile";
-
 import AdminCreateProduct from "../pages/adminPages/AdminCreateProduct";
 import AdminDElAndUpdate from "../pages/adminPages/AdminDElAndUpdate";
 import AdminUserOrder from "../pages/adminPages/AdminUserOrder";
 import AdminUserDetails from "../pages/adminPages/AdminUserDetails";
-
 import { AdminLayout } from "../layouts/AdminLayout";
-
 import { CancelPage } from "../pages/userPages/CancelPage";
-
 import { SuccessPage } from "../pages/userPages/SuccessPage";
 import { UpdateAdminProfile } from "../pages/adminPages/UpdateAdminProfile";
-
 import { UpdateProfileForm } from "../pages/userPages/UpdateProfileForm";
+import { SellerAuth } from "./protectedRoutes/SellerAuth";
+import { SellerLayout } from "../layouts/sellerLayout";
+import { SellerLoginPage } from "../pages/sellerpages/sellerLogin";
+import { SellerProducts } from "../pages/sellerpages/SellerProducts";
+import SellerUserOrdes from "../pages/sellerpages/SellerUserOrdes";
+import SellerCreateProduct from "../pages/sellerpages/SellerCreateProduct";
+import SellerDelAndUpdate from "../pages/sellerpages/SellerDelAndUpdate";
+import SellerProfile from "../pages/sellerpages/SellerProfile";
 
 export const router = createBrowserRouter([
   {
@@ -94,7 +94,7 @@ export const router = createBrowserRouter([
         path: "product",
         element: <ProductPage />,
       },
- 
+
       {
         path: "product-details/:id",
         element: <ProductDetails />,
@@ -111,7 +111,7 @@ export const router = createBrowserRouter([
       {
         path: "profile-update",
 
-        element: <UpdateProfileForm/>,
+        element: <UpdateProfileForm />,
       },
 
       {
@@ -179,5 +179,37 @@ export const router = createBrowserRouter([
         element: <UpdateAdminProfile />,
       },
     ],
+  },
+  {
+    path: "sellerlogin",
+    element: <SellerLoginPage/>,
+  },
+  {
+    path: "seller",
+    element: (
+      // <SellerAuth>
+        <SellerLayout />
+      // </SellerAuth>
+    ),children:[
+      {
+        path: "products",
+        element: <SellerProducts />,
+      },
+      {
+        path: "create-product",
+        element: <SellerCreateProduct/>,
+      },
+      {
+        path: "delete-and-update",
+        element: <SellerDelAndUpdate />,
+      }, {
+        path: "user-orders",
+        element: <SellerUserOrdes />,
+      },
+      {
+        path: "profile",
+        element: <SellerProfile/>,
+      },
+    ]
   },
 ]);

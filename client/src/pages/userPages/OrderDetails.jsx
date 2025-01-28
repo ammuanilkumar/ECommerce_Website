@@ -56,6 +56,10 @@ export const OrderDetails = () => {
                 <span className="badge badge-success">{order.status}</span>
               </p>
               <p className="text-gray-700">
+                <strong>Address:</strong>{" "}
+                <span className="badge badge-success">{order.address}</span>
+              </p>
+              <p className="text-gray-700">
                 <strong>Total Price:</strong> {order.totalPrice}{" "}
                 {order.currency.toUpperCase()}
               </p>

@@ -4,6 +4,10 @@ import { axiosInstance } from "../../config/axiosInstance";
 import ProductCards from "../../components/ui/cards";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProductList } from "../../redux/features/productSlice";
+import WriteReview from "./WriteReview";
+
+import ProductReviews from "./ProductReviews";
+
 
 export const ProductPage = () => {
   const dispatch = useDispatch();
@@ -37,6 +41,12 @@ export const ProductPage = () => {
         {products.length > 0 ? (
           products.map((value) => (
             <ProductCards key={value._id} product={value} />
+                  // {/* Write a Review */}
+                  // <WriteReview productId={value._id} />
+
+                  // {/* Product Reviews */}
+                  // <ProductReviews productId={value._id} />
+
           ))
         ) : (
           <p className="col-span-full text-center text-lg">Loading.....</p>

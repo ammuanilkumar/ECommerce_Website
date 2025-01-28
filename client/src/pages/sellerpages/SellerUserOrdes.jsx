@@ -1,10 +1,8 @@
-import React from 'react'
+import React from "react";
 import { useEffect, useState } from "react";
 import { axiosInstance } from "../../config/axiosInstance";
 
-
-
-const AdminUserOrder = () => {
+const SellerUserOrdes = () => {
   const [orderDetails, setOrderDetails] = useState([]); // State to hold order details
   const [loading, setLoading] = useState(true); // State to manage loading status
   const [error, setError] = useState(null); // State to manage errors
@@ -13,11 +11,11 @@ const AdminUserOrder = () => {
   const handleOdearDetails = async () => {
     try {
       const response = await axiosInstance({
-        url: `/admin/getuserorders`, // Adjust this URL based on your API
+        url: `/seller/getuserorders`, // Adjust this URL based on your API
         method: "GET",
         withCredentials: true,
       });
-console.log(response)
+      console.log(response);
       if (response?.data?.data) {
         setOrderDetails(response.data.data); // Set order details in state
       } else {
@@ -44,7 +42,7 @@ console.log(response)
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
       <h1 className="text-3xl font-bold mb-8 text-center text-gray-800">
-        Admin Order Details
+        Seller Order Details
       </h1>
       {orderDetails.length > 0 ? (
         <ul className="space-y-6">
@@ -60,7 +58,7 @@ console.log(response)
                 </p>
                 <p className="text-gray-600">
                   <strong>Email:</strong> {order.user.email}
-                </p>
+                </p>{" "}
                 <p className="text-gray-600">
                   <strong>Address:</strong> {order.user.address}
                 </p>
@@ -71,13 +69,11 @@ console.log(response)
                 <h2 className="text-xl font-semibold text-gray-800 mb-2">
                   Order Information
                 </h2>
-               
+
                 <p className="text-gray-600">
                   <strong>Total Price:</strong> ₹
                   {(order.totalPrice / 100).toFixed(2)} {order.currency}
                 </p>
-              
-              
               </div>
 
               {/* Products in the order */}
@@ -134,6 +130,6 @@ console.log(response)
       )}
     </div>
   );
-}
+};
 
-export default AdminUserOrder
+export default SellerUserOrdes;

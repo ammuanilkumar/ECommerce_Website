@@ -25,7 +25,9 @@ const userSchema = new mongoose.Schema(
     },
     profile: {
       type: String,
-     
+    },
+    address: {
+      type: String,
     },
     wishlist: [
       {
@@ -45,7 +47,7 @@ const userSchema = new mongoose.Schema(
         ref: "Cart",
       },
     ],
-    session : [
+    session: [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: " session ",

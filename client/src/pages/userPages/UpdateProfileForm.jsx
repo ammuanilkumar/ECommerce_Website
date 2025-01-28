@@ -1,13 +1,12 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
 import { axiosInstance } from "../../config/axiosInstance";
 
 export const UpdateProfileForm = () => {
   // State to store the user's profile data to be updated
   const [userData, setUserData] = useState({
     name: "",
-
     phone: "",
+    address: "", // Added address field
   });
 
   // State for loading, error, and success messages
@@ -81,8 +80,6 @@ export const UpdateProfileForm = () => {
           />
         </div>
 
-      
-
         <div className="form-group">
           <label
             htmlFor="phone"
@@ -101,6 +98,24 @@ export const UpdateProfileForm = () => {
           />
         </div>
 
+        <div className="form-group">
+          <label
+            htmlFor="address"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Address:
+          </label>
+          <textarea
+            id="address"
+            name="address"
+            value={userData.address}
+            onChange={handleInputChange}
+            className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+            rows={3}
+            required
+          />
+        </div>
+
         <button
           type="submit"
           disabled={loading}
@@ -112,5 +127,3 @@ export const UpdateProfileForm = () => {
     </div>
   );
 };
-
-

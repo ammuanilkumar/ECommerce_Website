@@ -66,6 +66,9 @@ export const UserProfile = () => {
               <p>
                 <span className="font-medium text-gray-900">Mobile:</span>{" "}
                 {user.mobile}
+              </p> <p>
+                <span className="font-medium text-gray-900">address:</span>{" "}
+                {user.address}
               </p>
             </div>
           </div>

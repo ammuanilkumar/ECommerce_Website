@@ -238,13 +238,13 @@ export const seasonOdearDetails = async (req, res) => {
 
 export const updateUserProfile = async (req, res) => {
   try {
-    const { name, phone } = req.body; // Get updated fields from the request body
+    const { name, phone,address } = req.body; // Get updated fields from the request body
     const user = req.user; // Assuming `req.user` contains the authenticated user's details
-    console.log("User===>", user);
+   
 
     // Find the user in the database by email
     const userData = await User.findOne({ email: user.email });
-    console.log("userData===>", userData);
+  
 
     // Check if the user exists
     if (!userData) {
@@ -254,7 +254,7 @@ export const updateUserProfile = async (req, res) => {
     // Find the user by ID and update their profile
     const updatedUser = await User.findByIdAndUpdate(
       userData._id, // Pass the user's `_id` here
-      { name, phone }, // Fields to update
+      { name, phone,address }, // Fields to update
       { new: true } // Return the updated document
     );
 

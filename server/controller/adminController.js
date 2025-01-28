@@ -380,6 +380,7 @@ export const getAllUserOrders = async (req, res) => {
                     price: item.product.price,
                     quantity: item.quantity,
                     status: item.status, // Individual product status
+                    address: item.address,
                     totalProductPrice: item.product.price * item.quantity,
                   };
                 }
@@ -395,6 +396,7 @@ export const getAllUserOrders = async (req, res) => {
               id: user._id,
               name: user.name,
               email: user.email,
+              address:user.address
             },
           };
         });
