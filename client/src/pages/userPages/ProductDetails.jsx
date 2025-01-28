@@ -2,96 +2,76 @@ import { useParams } from "react-router-dom";
 import { axiosInstance } from "../../config/axiosInstance";
 import { useEffect, useState } from "react";
 
-export const ProductDetails = () => {
+const ProductDetails = () => {
   const [productDetails, setProductDetails] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [cartMessage, setCartMessage] = useState(null);
-  const [wishlistMessage, setWishlistMessage] = useState(null); // State for wishlist message
+  const [wishlistMessage, setWishlistMessage] = useState(null);
   const [quantity, setQuantity] = useState(1);
+  const [reviews, setReviews] = useState([]);
+  const { id } = useParams();
 
-  const { id } = useParams(); // productId from URL
-
-  console.log("productDetails===>", productDetails)
-
-  // Fetch product details on component mount
+  // Fetch product details and reviews
   useEffect(() => {
     const fetchProductDetails = async () => {
       try {
-        const response = await axiosInstance({
-          url: `/product/details/${id}`,
-          method: "GET",
-          withCredentials: true,
-        });
-
-        if (response?.data?.data) {
-          setProductDetails(response.data.data);
-        } else {
-          setError("Product details not found");
-        }
+        const response = await axiosInstance.get(`/product/details/${id}`);
+        setProductDetails(response?.data?.data || null);
       } catch (error) {
-        console.error(error);
-        setError("Failed to fetch product details");
+        setError(error.response?.data?.message || "Failed to fetch product details");
       } finally {
         setLoading(false);
       }
     };
 
+    const fetchReviews = async () => {
+      try {
+        const response = await axiosInstance.get(`/reviews/${id}`);
+        setReviews(response?.data?.reviews || []);
+      } catch (error) {
+        console.error("Error fetching reviews:", error);
+      }
+    };
+
     fetchProductDetails();
+    fetchReviews();
   }, [id]);
 
-  // Add product to the user's cart
+  // Auto-hide messages after 3 seconds
+  useEffect(() => {
+    if (cartMessage) {
+      setTimeout(() => setCartMessage(null), 3000);
+    }
+    if (wishlistMessage) {
+      setTimeout(() => setWishlistMessage(null), 3000);
+    }
+  }, [cartMessage, wishlistMessage]);
 
   const addProductToUserCart = async () => {
     try {
-      const response = await axiosInstance({
-        url: `/cart/add/${id}`,
-        method: "POST",
-        withCredentials: true,
-        data: { quantity: 1 },
-      });
-
-      if (response?.data?.message === "Product added to cart successfully") {
-        setCartMessage("Product added to cart successfully!");
-      } else {
-        setCartMessage("Product quntity has been increased sussfully!");
-      }
+      const response = await axiosInstance.post(`/cart/add/${id}`, { quantity });
+      setCartMessage(response?.data?.message || "Product added to cart successfully!");
     } catch (error) {
-      console.error(error);
-      setCartMessage("Error adding product to cart");
+      setCartMessage(error.response?.data?.message || "Error adding product to cart");
     }
   };
 
-  // Add product to wishlist
   const addProductWishlist = async () => {
     try {
-      const response = await axiosInstance({
-        url: `/wishlist/add/${id}`, // Product ID in URL params
-        method: "POST",
-        withCredentials: true,
-      });
-
-      if (
-        response?.data?.message === "Product added to wishlist successfully"
-      ) {
-        setWishlistMessage("Product added to wishlist successfully!");
-      } else {
-        setWishlistMessage("Failed to add product to wishlist ");
-      }
+      const response = await axiosInstance.post(`/wishlist/add/${id}`);
+      setWishlistMessage(response?.data?.message || "Product added to wishlist successfully!");
     } catch (error) {
-      console.error(error);
-      setWishlistMessage("Product already in wishlist");
+      setWishlistMessage(error.response?.data?.message || "Error adding product to wishlist");
     }
   };
 
-  // Loading and error states
-  if (loading) {
-    return <div className="text-center py-24">Loading...</div>;
-  }
+  const handleNewReview = (newReview) => {
+    setReviews((prevReviews) => [newReview, ...prevReviews]);
+  };
 
-  if (error) {
-    return <div className="text-center py-24 text-red-500">Error: {error}</div>;
-  }
+  if (loading) return <div className="text-center py-24">Loading...</div>;
+  if (error) return <div className="text-center py-24 text-red-500">Error: {error}</div>;
 
   return (
     <div className="bg-gray-100 min-h-screen">
@@ -114,14 +94,15 @@ export const ProductDetails = () => {
                 {productDetails?.desc || "Product description not available."}
               </p>
               <div className="flex items-center mb-5">
-                <span className="mr-3 text-gray-900 font-semibold">
-                  Quantity
-                </span>
+                <span className="mr-3 text-gray-900 font-semibold">Quantity</span>
                 <input
                   type="number"
                   min="1"
                   value={quantity}
-                  onChange={(e) => setQuantity(Number(e.target.value) || 1)}
+                  onChange={(e) => {
+                    const newQuantity = Number(e.target.value);
+                    setQuantity(isNaN(newQuantity) ? 1 : newQuantity);
+                  }}
                   className="w-16 p-2 text-center border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500"
                 />
               </div>
@@ -131,57 +112,88 @@ export const ProductDetails = () => {
                 </span>
                 <button
                   onClick={addProductToUserCart}
-                  className={`flex ml-auto text-white ${
-                    loading ? "bg-gray-500" : "bg-red-500"
-                  } border-0 py-2 px-6 focus:outline-none hover:${
-                    loading ? "bg-gray-600" : "bg-red-600"
-                  } transition-all duration-300 rounded-lg shadow-md`}
-                  disabled={loading}
+                  className="flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 transition-all duration-300 rounded-lg shadow-md"
                 >
                   Add to Cart
                 </button>
                 <button
-                  onClick={addProductWishlist} // Add to wishlist when heart is clicked
+                  onClick={addProductWishlist}
                   className="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 hover:text-red-500 ml-4 transition-all duration-300"
                 >
-                  <svg
-                    fill="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    className="w-5 h-5"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" />
-                  </svg>
+                  ❤️
                 </button>
               </div>
-              {cartMessage && (
-                <p
-                  className={`mt-4 text-sm ${
-                    cartMessage.includes("success")
-                      ? "text-green-600"
-                      : "text-red-500"
-                  }`}
-                >
-                  {cartMessage}
-                </p>
-              )}
-              {wishlistMessage && (
-                <p
-                  className={`mt-4 text-sm ${
-                    wishlistMessage.includes("success")
-                      ? "text-green-600"
-                      : "text-red-500"
-                  }`}
-                >
-                  {wishlistMessage}
-                </p>
-              )}
+              {cartMessage && <p className="mt-4 text-sm text-green-600">{cartMessage}</p>}
+              {wishlistMessage && <p className="mt-4 text-sm text-green-600">{wishlistMessage}</p>}
             </div>
           </div>
         </div>
       </section>
+
+      <div className="container mx-auto p-8 bg-white rounded-lg shadow-md">
+        <h2 className="text-2xl font-semibold mb-4">Write a Review</h2>
+        <WriteReview productId={id} onReviewAdded={handleNewReview} />
+      </div>
+
+      <div className="container mx-auto p-8 bg-white mt-6 rounded-lg shadow-md">
+        <h2 className="text-2xl font-semibold mb-4">Customer Reviews</h2>
+        <ProductReviews reviews={reviews} />
+      </div>
     </div>
   );
 };
+
+const ProductReviews = ({ reviews }) => (
+  <div>
+    <h3 className="text-xl font-bold">Product Reviews</h3>
+    {reviews?.length > 0 ? (
+      reviews.map((review) => (
+        <div key={review._id} className="border-b pb-4 mb-4">
+          <p>
+            <strong>{review?.user?.name || "Anonymous"}</strong>
+          </p>
+          <p>Rating: {review.rating} ⭐</p>
+          <p>{review.comment}</p>
+        </div>
+      ))
+    ) : (
+      <p>No reviews yet.</p>
+    )}
+  </div>
+);
+
+const WriteReview = ({ productId, onReviewAdded }) => {
+  const [rating, setRating] = useState(0);
+  const [comment, setComment] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!rating || rating < 1) {
+      alert("Please select a rating.");
+      return;
+    }
+    try {
+      const response = await axiosInstance.post(`/reviews/add/${productId}`, { rating, comment });
+      onReviewAdded(response.data.review);
+      setRating(0);
+      setComment("");
+    } catch (error) {
+      alert(error.response?.data?.message || "Error adding review");
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <label>Rating:</label>
+      <select value={rating} onChange={(e) => setRating(Number(e.target.value))} required>
+        <option value="">Select Rating</option>
+        {[1, 2, 3, 4, 5].map((num) => <option key={num} value={num}>{num}</option>)}
+      </select>
+      <textarea value={comment} onChange={(e) => setComment(e.target.value)} required />
+      <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">Submit Review</button>
+    </form>
+  );
+};
+
+
+export default  ProductDetails

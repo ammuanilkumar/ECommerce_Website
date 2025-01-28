@@ -4,9 +4,6 @@ import { axiosInstance } from "../../config/axiosInstance";
 import ProductCards from "../../components/ui/cards";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProductList } from "../../redux/features/productSlice";
-import WriteReview from "./WriteReview";
-
-import ProductReviews from "./ProductReviews";
 
 
 export const ProductPage = () => {

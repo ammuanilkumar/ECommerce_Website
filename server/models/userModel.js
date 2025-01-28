@@ -47,6 +47,11 @@ const userSchema = new mongoose.Schema(
         ref: "Cart",
       },
     ],
+     review: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'Review',
+        
+        },
     session: [
       {
         type: mongoose.Schema.Types.ObjectId,

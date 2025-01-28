@@ -3,7 +3,6 @@ import { LoginPage } from "./../pages/userPages/LoginPage";
 import { SignupPage } from "./../pages/userPages/SignupPage";
 import { RootLayout } from "../layouts/RootLayout";
 import { AboutUsPage } from "../pages/webpages/AboutUsPage";
-import { ProductDetails } from "../pages/userPages/ProductDetails";
 import { ProductPage } from "../pages/userPages/ProductPage";
 import { CartPage } from "../pages/userPages/CartPage";
 import { UserLayout } from "../layouts/UserLayout";
@@ -29,13 +28,14 @@ import { SuccessPage } from "../pages/userPages/SuccessPage";
 import { UpdateAdminProfile } from "../pages/adminPages/UpdateAdminProfile";
 import { UpdateProfileForm } from "../pages/userPages/UpdateProfileForm";
 import { SellerAuth } from "./protectedRoutes/SellerAuth";
-import { SellerLayout } from "../layouts/sellerLayout";
 import { SellerLoginPage } from "../pages/sellerpages/sellerLogin";
 import { SellerProducts } from "../pages/sellerpages/SellerProducts";
 import SellerUserOrdes from "../pages/sellerpages/SellerUserOrdes";
 import SellerCreateProduct from "../pages/sellerpages/SellerCreateProduct";
 import SellerDelAndUpdate from "../pages/sellerpages/SellerDelAndUpdate";
 import SellerProfile from "../pages/sellerpages/SellerProfile";
+import ProductDetails from "../pages/userPages/ProductDetails"
+import { SellerLayout } from "../layouts/sellerLayout";
 
 export const router = createBrowserRouter([
   {
@@ -97,7 +97,7 @@ export const router = createBrowserRouter([
 
       {
         path: "product-details/:id",
-        element: <ProductDetails />,
+        element: <ProductDetails/>,
       },
       {
         path: "cart",
