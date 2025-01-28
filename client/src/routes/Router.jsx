@@ -31,11 +31,11 @@ import { SellerAuth } from "./protectedRoutes/SellerAuth";
 import { SellerLoginPage } from "../pages/sellerpages/SellerLoginPage";
 import { SellerProducts } from "../pages/sellerpages/SellerProducts";
 import SellerUserOrdes from "../pages/sellerpages/SellerUserOrdes";
-import SellerCreateProduct from "../pages/sellerpages/SellerCreateProduct";
 import SellerDelAndUpdate from "../pages/sellerpages/SellerDelAndUpdate";
 import SellerProfile from "../pages/sellerpages/SellerProfile";
 import ProductDetails from "../pages/userPages/ProductDetails"
 import { SellerLayout } from "../layouts/sellerLayout";
+import SellerCreateProduct from "../pages/sellerpages/SellerCreateProduct";
 
 export const router = createBrowserRouter([
   {

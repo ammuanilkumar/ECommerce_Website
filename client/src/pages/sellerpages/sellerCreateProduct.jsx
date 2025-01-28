@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 import { axiosInstance } from "../../config/axiosInstance";
 
 // API function to create a product
-const sellerCreateProduct  = async (data) => {
+const sellerCreateProduct = async (data) => {
   try {
     const response = await axiosInstance({
       url: "/seller/createproduct",
