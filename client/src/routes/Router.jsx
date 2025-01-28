@@ -28,7 +28,7 @@ import { SuccessPage } from "../pages/userPages/SuccessPage";
 import { UpdateAdminProfile } from "../pages/adminPages/UpdateAdminProfile";
 import { UpdateProfileForm } from "../pages/userPages/UpdateProfileForm";
 import { SellerAuth } from "./protectedRoutes/SellerAuth";
-import { SellerLoginPage } from "../pages/sellerpages/sellerLogin";
+import { SellerLoginPage } from "../pages/sellerpages/SellerLoginPage";
 import { SellerProducts } from "../pages/sellerpages/SellerProducts";
 import SellerUserOrdes from "../pages/sellerpages/SellerUserOrdes";
 import SellerCreateProduct from "../pages/sellerpages/SellerCreateProduct";
