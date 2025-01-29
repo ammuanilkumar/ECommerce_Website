@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 import { axiosInstance } from "../../config/axiosInstance";
 
 // API function to create a product
-const sellerCreateProduct = async (data) => {
+const createProductAPI = async (data) => {
   try {
     const response = await axiosInstance({
       url: "/seller/createproduct",
@@ -52,7 +52,7 @@ const SellerCreateProduct = () => {
         formData.append("image", watchImage[0]);
       }
 
-      const response = await sellerCreateProduct(formData);
+      const response = await createProductAPI(formData);
       if (response && response.success) {
         toast.success("Product created successfully");
         navigate("/seller/products");
