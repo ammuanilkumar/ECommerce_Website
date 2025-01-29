@@ -67,7 +67,6 @@ export const SellerLoginPage = () => {
               <input
                 type="email"
                 placeholder="Enter your seller email"
-            
                 className="input input-bordered w-full p-3 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
                 {...register("email", {
                   required: "Seller email is required",
@@ -92,7 +91,6 @@ export const SellerLoginPage = () => {
               <input
                 type="password"
                 placeholder="Enter your seller password"
-                
                 className="input input-bordered w-full p-3 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
                 {...register("password", {
                   required: "Seller password is required",
