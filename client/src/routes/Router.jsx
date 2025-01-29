@@ -33,9 +33,7 @@ import { SellerProducts } from "../pages/sellerpages/SellerProducts";
 import SellerUserOrdes from "../pages/sellerpages/SellerUserOrdes";
 import SellerDelAndUpdate from "../pages/sellerpages/SellerDelAndUpdate";
 import SellerProfile from "../pages/sellerpages/SellerProfile";
-import ProductDetails from "../pages/userPages/ProductDetails"
-
-
+import ProductDetails from "../pages/userPages/ProductDetails";
 
 import SellerCreateProduct from "../pages/sellerpages/SellerCreateProduct";
 import SellerLayout from "../layouts/sellerLayout";
@@ -100,7 +98,7 @@ export const router = createBrowserRouter([
 
       {
         path: "product-details/:id",
-        element: <ProductDetails/>,
+        element: <ProductDetails />,
       },
       {
         path: "cart",
@@ -185,15 +183,16 @@ export const router = createBrowserRouter([
   },
   {
     path: "sellerlogin",
-    element: <SellerLoginPage/>,
+    element: <SellerLoginPage />,
   },
   {
     path: "seller",
     element: (
-      // <SellerAuth>
+      <SellerAuth>
         <SellerLayout />
-      // </SellerAuth>
-    ),children:[
+      </SellerAuth>
+    ),
+    children: [
       {
         path: "products",
         element: <SellerProducts />,
@@ -205,14 +204,15 @@ export const router = createBrowserRouter([
       {
         path: "delete-and-update",
         element: <SellerDelAndUpdate />,
-      }, {
+      },
+      {
         path: "user-orders",
         element: <SellerUserOrdes />,
       },
       {
         path: "profile",
-        element: <SellerProfile/>,
+        element: <SellerProfile />,
       },
-    ]
+    ],
   },
 ]);

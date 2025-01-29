@@ -10,7 +10,7 @@ export const SellerAuth = ({ children }) => {
     const checkUser = async () => {
       try {
         const response = await axiosInstance({
-          url: "/seller/check-admin",
+          url: "/seller/check-seller",
           method: "GET",
           withCredentials: true,
         });
