@@ -36,8 +36,9 @@ import SellerProfile from "../pages/sellerpages/SellerProfile";
 import ProductDetails from "../pages/userPages/ProductDetails"
 
 
-import SellerLayout from "../layouts/sellerLayout";
+
 import SellerCreateProduct from "../pages/sellerpages/SellerCreateProduct";
+import SellerLayout from "../layouts/sellerLayout";
 
 export const router = createBrowserRouter([
   {
