@@ -28,7 +28,7 @@ const createProductAPI = async (data) => {
   }
 };
 
-const SellerCreateProduct = () => {
+export const SellCreateProduct = () => {
   const {
     register,
     handleSubmit,
@@ -219,4 +219,3 @@ const SellerCreateProduct = () => {
   );
 };
 
-export default SellerCreateProduct;

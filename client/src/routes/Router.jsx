@@ -35,7 +35,7 @@ import SellerDelAndUpdate from "../pages/sellerpages/SellerDelAndUpdate";
 import SellerProfile from "../pages/sellerpages/SellerProfile";
 import ProductDetails from "../pages/userPages/ProductDetails";
 import SellerLayout from "../layouts/SellerLayout"; 
-import SellerCreateProduct from "../pages/sellerpages/SellerCreateProduct";
+import { SellCreateProduct } from "../pages/sellerpages/SellCreateProduct";
 
 export const router = createBrowserRouter([
   {
@@ -198,7 +198,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "create-product",
-        element: <SellerCreateProduct/>,
+        element: <SellCreateProduct/>,
       },
       {
         path: "delete-and-update",
