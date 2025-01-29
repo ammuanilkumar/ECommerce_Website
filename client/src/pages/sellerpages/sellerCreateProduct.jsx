@@ -188,6 +188,7 @@ const SellerCreateProduct = () => {
             )}
           </div>
 
+
           {/* Image */}
           <div className="form-control">
             <label className="label">
